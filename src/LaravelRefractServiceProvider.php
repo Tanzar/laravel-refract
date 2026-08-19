@@ -37,8 +37,6 @@ class LaravelRefractServiceProvider extends ServiceProvider
             __DIR__.'/../database/migrations' => database_path('migrations'),
         ], ['refract', 'refract-migrations']);
 
-        $this->commands([
-            
-        ]);
+        $this->commands([]);
     }
 }

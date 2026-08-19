@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tanzar\Refract\Tests;
 
-use Tanzar\Refract\LaravelRefractServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
+use Tanzar\Refract\LaravelRefractServiceProvider;
 
 abstract class TestCase extends Orchestra
 {
