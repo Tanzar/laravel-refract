@@ -1,6 +1,6 @@
 <?php
 
-namespace Tanzar\Refract;
+namespace Tanzar\Refract\Enums;
 
 enum ParamTypes : string
 {

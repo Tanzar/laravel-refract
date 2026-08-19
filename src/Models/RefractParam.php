@@ -5,7 +5,7 @@ namespace Tanzar\Refract\Models;
 use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
-use Tanzar\Refract\ParamTypes;
+use Tanzar\Refract\Enums\ParamTypes;
 
 /**
  * @property int $id
