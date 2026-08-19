@@ -15,4 +15,8 @@ abstract class TestCase extends Orchestra
             LaravelRefractServiceProvider::class,
         ];
     }
+    protected function defineDatabaseMigrations(): void
+    {
+        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+    }
 }
