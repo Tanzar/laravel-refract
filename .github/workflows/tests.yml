@@ -48,5 +48,5 @@ jobs:
       - name: Test Suite
         env:
          DB_CONNECTION: sqlite
-         DB_DATABASE: ""
-        run: composer test:unit --recreate-databases
+         DB_DATABASE: ":memory:"
+        run: vendor/bin/pest
