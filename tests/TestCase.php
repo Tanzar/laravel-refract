@@ -22,7 +22,7 @@ abstract class TestCase extends Orchestra
     {
         $this->loadMigrationsFrom([
             __DIR__ . '/../database/migrations',
-            __DIR__ . '../../workbench/database/migrations'
+            __DIR__ . '/../workbench/database/migrations'
         ]);
     }
 }

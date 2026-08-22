@@ -49,4 +49,4 @@ jobs:
         env:
          DB_CONNECTION: sqlite
          DB_DATABASE: ":memory:"
-        run: vendor/bin/pest --no-parallel
+        run: vendor/bin/pest
