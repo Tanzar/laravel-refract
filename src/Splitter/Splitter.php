@@ -66,6 +66,11 @@ abstract class Splitter
 
     abstract protected function process(Model $model, SplitterParamsInterface $params): void;
 
+    /**
+     * Returns an array of relations that should be loaded for the model before processing.
+     *
+     * @return array<string>
+     */
     public function relations(): array
     {
         return [];

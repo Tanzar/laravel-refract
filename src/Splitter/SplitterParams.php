@@ -9,6 +9,7 @@ use Tanzar\Refract\Exceptions\RefractException;
 
 class SplitterParams implements SplitterParamsInterface
 {
+    /** @var array<string, array{type: ParamTypes, value: mixed}> */
     private array $params = [];
 
     public function __construct(
@@ -65,6 +66,9 @@ class SplitterParams implements SplitterParamsInterface
         return $this->modelValue;
     }
 
+    /**
+     * @return string[]
+     */
     public function getKeys(): array
     {
         return $this->keys->getKeys();

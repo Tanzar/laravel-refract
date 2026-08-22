@@ -8,6 +8,7 @@ use Tanzar\Refract\Enums\ParamTypes;
 
 class RequiredParams implements RequiredParamsInterface
 {
+    /** @var array<string, array{type: ParamTypes, value: mixed}> */
     private array $keys = [];
 
     #[Override]
@@ -65,6 +66,9 @@ class RequiredParams implements RequiredParamsInterface
         return $this->keys[$name]['value'] ?? null;
     }
 
+    /**
+     * @return array<string>
+     */
     public function getKeys(): array
     {
         return array_keys($this->keys);
