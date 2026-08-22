@@ -23,11 +23,14 @@ return new class extends Migration
         Schema::create('refract_params', function (Blueprint $table) {
             $table->id();
             $table->string('type');
+            $table->string('raw_value');
             $table->date('date_value')->nullable();
             $table->integer('int_value')->nullable();
             $table->float('float_value')->nullable();
             $table->string('string_value')->nullable();
             $table->boolean('bool_value')->nullable();
+
+            $table->unique(['type', 'raw_value']);
         });
 
         Schema::create('refract_model_bands', function(Blueprint $table) {
