@@ -43,6 +43,9 @@ jobs:
         run: composer analyse
 
       - name: Type Coverage
+        env:
+         DB_CONNECTION: sqlite
+         DB_DATABASE: ""
         run: composer test:types
 
       - name: Test Suite
