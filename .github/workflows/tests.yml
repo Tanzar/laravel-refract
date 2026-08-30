@@ -49,4 +49,4 @@ jobs:
         env:
          DB_CONNECTION: sqlite
          DB_DATABASE: ":memory:"
-        run: vendor/bin/pest
+        run: vendor/bin/pest --display-warnings --display-deprecations
