@@ -38,12 +38,17 @@ return new class extends Migration
             $table->foreignIdFor(RefractSplitter::class, 'splitter_id');
             $table->unsignedBigInteger('band_index');
             $table->float('current_value');
+
+            $table->primary([ 'model_id', 'splitter_id' ]);
         });
 
         Schema::create('refract_bands', function(Blueprint $table) {
             $table->foreignIdFor(RefractSplitter::class, 'splitter_id');
             $table->unsignedBigInteger('band_index');
+            $table->string('signature_hash');
             $table->float('current_value');
+
+            $table->primary([ 'splitter_id', 'band_index' ]);
         });
 
         Schema::create('refract_bands_params', function(Blueprint $table) {
@@ -51,6 +56,8 @@ return new class extends Migration
             $table->unsignedBigInteger('band_index');
             $table->foreignIdFor(RefractParam::class, 'param_id');
             $table->string('key_name');
+
+            $table->primary([ 'splitter_id', 'band_index', 'param_id', 'key_name' ]);
         });
     }
 

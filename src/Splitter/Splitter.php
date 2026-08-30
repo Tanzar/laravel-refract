@@ -44,9 +44,12 @@ abstract class Splitter
             return null;
         }
 
+        $modelIdKey = $model->getKeyName();
+
         $params = new SplitterParams(
             $this->requiredKeys,
-            $this->modelValue($model)
+            $this->modelValue($model),
+            $model->$modelIdKey
         );
         $this->process($model, $params);
         return $params;

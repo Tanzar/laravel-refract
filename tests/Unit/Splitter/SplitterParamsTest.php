@@ -19,7 +19,7 @@ beforeEach(function() use (&$requiredParams) {
 
 test('SplitterParams date', function() use (&$requiredParams) {
     /** @var RequiredParams $requiredParams */
-    $instance = new SplitterParams($requiredParams, 1.0);
+    $instance = new SplitterParams($requiredParams, 1.0, 1);
 
     expect($instance->getValue('created'))->toBe('2026-08-22');
 
@@ -32,7 +32,7 @@ test('SplitterParams date', function() use (&$requiredParams) {
 
 test('SplitterParams int', function() use (&$requiredParams) {
     /** @var RequiredParams $requiredParams */
-    $instance = new SplitterParams($requiredParams, 1.0);
+    $instance = new SplitterParams($requiredParams, 1.0, 1);
 
     expect($instance->getValue('user'))->toBe(123);
 
@@ -45,7 +45,7 @@ test('SplitterParams int', function() use (&$requiredParams) {
 
 test('SplitterParams float', function() use (&$requiredParams) {
     /** @var RequiredParams $requiredParams */
-    $instance = new SplitterParams($requiredParams, 1.0);
+    $instance = new SplitterParams($requiredParams, 1.0, 1);
 
     expect($instance->getValue('price'))->toBe(1.53);
 
@@ -58,7 +58,7 @@ test('SplitterParams float', function() use (&$requiredParams) {
 
 test('SplitterParams string', function() use (&$requiredParams) {
     /** @var RequiredParams $requiredParams */
-    $instance = new SplitterParams($requiredParams, 1.0);
+    $instance = new SplitterParams($requiredParams, 1.0, 1);
 
     expect($instance->getValue('transaction_type'))->toBe('cash');
 
@@ -71,7 +71,7 @@ test('SplitterParams string', function() use (&$requiredParams) {
 
 test('SplitterParams bool', function() use (&$requiredParams) {
     /** @var RequiredParams $requiredParams */
-    $instance = new SplitterParams($requiredParams, 1.0);
+    $instance = new SplitterParams($requiredParams, 1.0, 1);
 
     expect($instance->getValue('isDead'))->toBe(true);
 
@@ -84,21 +84,21 @@ test('SplitterParams bool', function() use (&$requiredParams) {
 
 test('SplitterParams getModelValue', function() use (&$requiredParams) {
     /** @var RequiredParams $requiredParams */
-    $instance = new SplitterParams($requiredParams, 15.0);
+    $instance = new SplitterParams($requiredParams, 15.0, 1);
 
     expect($instance->getModelValue())->toBe(15.0);
 });
 
 test('SplitterParams getKeys', function() use (&$requiredParams) {
     /** @var RequiredParams $requiredParams */
-    $instance = new SplitterParams($requiredParams, 15.0);
+    $instance = new SplitterParams($requiredParams, 15.0, 1);
 
     expect($instance->getKeys())->toBe([ 'created', 'user', 'price', 'transaction_type', 'isDead' ]);
 });
 
 test('SplitterParams invalid key', function() use (&$requiredParams) {
     /** @var RequiredParams $requiredParams */
-    $instance = new SplitterParams($requiredParams, 15.0);
+    $instance = new SplitterParams($requiredParams, 15.0, 1);
 
     $instance->date('created', Carbon::parse('2026-08-22'));
 

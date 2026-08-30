@@ -71,7 +71,10 @@ class RequiredParams implements RequiredParamsInterface
      */
     public function getKeys(): array
     {
-        return array_keys($this->keys);
+        $keys = array_keys($this->keys);
+        ksort($keys);
+
+        return $keys;
     }
 
     public function encode(): string

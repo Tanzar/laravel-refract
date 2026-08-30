@@ -11,10 +11,12 @@ class SplitterParams implements SplitterParamsInterface
 {
     /** @var array<string, array{type: ParamTypes, value: mixed}> */
     private array $params = [];
+    private ?string $hash = null;
 
     public function __construct(
         private RequiredParams $keys,
-        private float $modelValue
+        private float $modelValue,
+        private mixed $modelId
     ) { }
 
     #[Override]
@@ -66,6 +68,11 @@ class SplitterParams implements SplitterParamsInterface
         return $this->modelValue;
     }
 
+    public function getModelId(): mixed
+    {
+        return $this->modelId;
+    }
+
     /**
      * @return string[]
      */
@@ -85,4 +92,40 @@ class SplitterParams implements SplitterParamsInterface
         return $this->params[$name]['value'] ??
             $this->keys->getDefault($name);
     }
+
+    public function hash(): string
+    {
+        if ($this->hash !== null) {
+            return $this->hash;
+        }
+
+        $hashData = [];
+        foreach ($this->keys->getKeys() as $key) {
+            $hashData[$key] = $this->getValue($key);
+        }
+        $this->hash = md5(http_build_query($hashData));
+        return $this->hash;
+    }
+
+    /**
+     * @param string $key
+     * @return array<string, mixed>
+     */
+    public function toInsert(string $key): array
+    {
+        $insert = [
+            'type' => $this->getType($key)->value,
+            'raw_value' => $this->getValue($key)
+        ];
+
+        $valueType = $this->getType($key);
+        $value = $this->getValue($key);
+        foreach (ParamTypes::cases() as $type) {
+            $column = $type->column();
+            $insert[$column] = $type === $valueType ? $value : null;
+        }
+        return $insert;
+    }
+
+    
 }
