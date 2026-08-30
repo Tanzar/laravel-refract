@@ -29,7 +29,7 @@ jobs:
         with:
           php-version: '8.5'
           extensions: dom, curl, libxml, mbstring, zip, fileinfo, sqlite, pdo_sqlite, bcmath, intl
-          ini-values: error_reporting=E_ALL
+          ini-values: error_reporting=E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED
           tools: composer:v2
           coverage: none
 
