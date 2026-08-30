@@ -103,7 +103,7 @@ class SplitterParams implements SplitterParamsInterface
         foreach ($this->keys->getKeys() as $key) {
             $hashData[$key] = $this->getValue($key);
         }
-        $this->hash = md5(http_build_query($hashData));
+        $this->hash = hash('sha256', http_build_query($hashData));
         return $this->hash;
     }
 

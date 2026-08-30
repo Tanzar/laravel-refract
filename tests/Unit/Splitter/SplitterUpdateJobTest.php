@@ -59,22 +59,52 @@ test('SplitterUpdateJob fills empty tables', function () {
 
     $this->assertDatabaseCount('refract_bands', 6);
     $this->assertDatabaseHas('refract_bands',
-        [ 'splitter_id' => 1, 'band_index' => 1, 'signature_hash' => 'b7b5767b4352a9188b226f087b6ce02f', 'current_value' => 1 ]
+        [
+            'splitter_id' => 1,
+            'band_index' => 1,
+            'signature_hash' => '25aa13dc7254835216714fcfcbb35e706993b35ad1e1a3def9cceeccd5479c77',
+            'current_value' => 1
+        ]
     );
     $this->assertDatabaseHas('refract_bands',
-        [ 'splitter_id' => 1, 'band_index' => 2, 'signature_hash' => '3e807161aeb8dcc3ade4c1a0f8190318', 'current_value' => 2 ]
+        [
+            'splitter_id' => 1,
+            'band_index' => 2,
+            'signature_hash' => 'bf37081ce9f5e438ae0c42973fe429e46f037801b7733e2b094df9d107cb834b',
+            'current_value' => 2
+        ]
     );
     $this->assertDatabaseHas('refract_bands',
-        [ 'splitter_id' => 1, 'band_index' => 3, 'signature_hash' => 'a95f0d6cb1528579ddcc262b9fe5b777', 'current_value' => 1 ]
+        [
+            'splitter_id' => 1,
+            'band_index' => 3,
+            'signature_hash' => '13e024d041a7faf48396bc5f490ac55ed114651e0cf60dddcccf500899b00400',
+            'current_value' => 1
+        ]
     );
     $this->assertDatabaseHas('refract_bands',
-        [ 'splitter_id' => 1, 'band_index' => 4, 'signature_hash' => 'f1863d7c34e309a20ae1dc53cfc20b69', 'current_value' => 1 ]
+        [
+            'splitter_id' => 1,
+            'band_index' => 4,
+            'signature_hash' => 'c839fc8afe9fd34e45957316e91ae8df86688454cd7da97ae4f96458499ed8f9',
+            'current_value' => 1
+        ]
     );
     $this->assertDatabaseHas('refract_bands',
-        [ 'splitter_id' => 1, 'band_index' => 5, 'signature_hash' => '5a332475f3929209182f3788120f817a', 'current_value' => 1 ]
+        [
+            'splitter_id' => 1,
+            'band_index' => 5,
+            'signature_hash' => 'cfee4b3df4bfa094c75e7e388346a193068ef625023129549d76e014d1473558',
+            'current_value' => 1
+        ]
     );
     $this->assertDatabaseHas('refract_bands',
-        [ 'splitter_id' => 1, 'band_index' => 6, 'signature_hash' => '739db051b7948ce761df7a8acfc9adb7', 'current_value' => 1 ]
+        [
+            'splitter_id' => 1,
+            'band_index' => 6,
+            'signature_hash' => '1362112153d641c66b2bb867f479e0f84b9509d545e8af072be2a668d05175ca',
+            'current_value' => 1
+        ]
     );
 
     $this->assertDatabaseCount('refract_bands_params', 12);
@@ -148,22 +178,52 @@ test('SplitterUpdateJob updates existing tables', function () {
     DB::table('refract_model_bands')->insert([ 'model_id' => 7, 'splitter_id' => 1, 'band_index' => 6, 'current_value' => 1 ]);
 
     DB::table('refract_bands')->insert(
-        [ 'splitter_id' => 1, 'band_index' => 1, 'signature_hash' => 'b7b5767b4352a9188b226f087b6ce02f', 'current_value' => 1 ]
+        [
+            'splitter_id' => 1,
+            'band_index' => 1,
+            'signature_hash' => '25aa13dc7254835216714fcfcbb35e706993b35ad1e1a3def9cceeccd5479c77',
+            'current_value' => 1
+        ]
     );
     DB::table('refract_bands')->insert(
-        [ 'splitter_id' => 1, 'band_index' => 2, 'signature_hash' => '3e807161aeb8dcc3ade4c1a0f8190318', 'current_value' => 2 ]
+        [
+            'splitter_id' => 1,
+            'band_index' => 2,
+            'signature_hash' => 'bf37081ce9f5e438ae0c42973fe429e46f037801b7733e2b094df9d107cb834b',
+            'current_value' => 2
+        ]
     );
     DB::table('refract_bands')->insert(
-        [ 'splitter_id' => 1, 'band_index' => 3, 'signature_hash' => 'a95f0d6cb1528579ddcc262b9fe5b777', 'current_value' => 1 ]
+        [
+            'splitter_id' => 1,
+            'band_index' => 3,
+            'signature_hash' => '13e024d041a7faf48396bc5f490ac55ed114651e0cf60dddcccf500899b00400',
+            'current_value' => 1
+        ]
     );
     DB::table('refract_bands')->insert(
-        [ 'splitter_id' => 1, 'band_index' => 4, 'signature_hash' => 'f1863d7c34e309a20ae1dc53cfc20b69', 'current_value' => 1 ]
+        [
+            'splitter_id' => 1,
+            'band_index' => 4,
+            'signature_hash' => 'c839fc8afe9fd34e45957316e91ae8df86688454cd7da97ae4f96458499ed8f9',
+            'current_value' => 1
+        ]
     );
     DB::table('refract_bands')->insert(
-        [ 'splitter_id' => 1, 'band_index' => 5, 'signature_hash' => '5a332475f3929209182f3788120f817a', 'current_value' => 1 ]
+        [
+            'splitter_id' => 1,
+            'band_index' => 5,
+            'signature_hash' => 'cfee4b3df4bfa094c75e7e388346a193068ef625023129549d76e014d1473558',
+            'current_value' => 1
+        ]
     );
     DB::table('refract_bands')->insert(
-        [ 'splitter_id' => 1, 'band_index' => 6, 'signature_hash' => '739db051b7948ce761df7a8acfc9adb7', 'current_value' => 1 ]
+        [
+            'splitter_id' => 1,
+            'band_index' => 6,
+            'signature_hash' => '1362112153d641c66b2bb867f479e0f84b9509d545e8af072be2a668d05175ca',
+            'current_value' => 1
+        ]
     );
 
     DB::table('refract_bands_params')->insert(
@@ -250,28 +310,28 @@ test('SplitterUpdateJob updates existing tables', function () {
 
     $this->assertDatabaseCount('refract_bands', 8);
     $this->assertDatabaseHas('refract_bands',
-        [ 'splitter_id' => 1, 'band_index' => 1, 'signature_hash' => 'b7b5767b4352a9188b226f087b6ce02f', 'current_value' => 0 ]
+        [ 'splitter_id' => 1, 'band_index' => 1, 'signature_hash' => '25aa13dc7254835216714fcfcbb35e706993b35ad1e1a3def9cceeccd5479c77', 'current_value' => 0 ]
     );
     $this->assertDatabaseHas('refract_bands',
-        [ 'splitter_id' => 1, 'band_index' => 2, 'signature_hash' => '3e807161aeb8dcc3ade4c1a0f8190318', 'current_value' => 2 ]
+        [ 'splitter_id' => 1, 'band_index' => 2, 'signature_hash' => 'bf37081ce9f5e438ae0c42973fe429e46f037801b7733e2b094df9d107cb834b', 'current_value' => 2 ]
     );
     $this->assertDatabaseHas('refract_bands',
-        [ 'splitter_id' => 1, 'band_index' => 3, 'signature_hash' => 'a95f0d6cb1528579ddcc262b9fe5b777', 'current_value' => 0 ]
+        [ 'splitter_id' => 1, 'band_index' => 3, 'signature_hash' => '13e024d041a7faf48396bc5f490ac55ed114651e0cf60dddcccf500899b00400', 'current_value' => 0 ]
     );
     $this->assertDatabaseHas('refract_bands',
-        [ 'splitter_id' => 1, 'band_index' => 4, 'signature_hash' => 'f1863d7c34e309a20ae1dc53cfc20b69', 'current_value' => 2 ]
+        [ 'splitter_id' => 1, 'band_index' => 4, 'signature_hash' => 'c839fc8afe9fd34e45957316e91ae8df86688454cd7da97ae4f96458499ed8f9', 'current_value' => 2 ]
     );
     $this->assertDatabaseHas('refract_bands',
-        [ 'splitter_id' => 1, 'band_index' => 5, 'signature_hash' => '5a332475f3929209182f3788120f817a', 'current_value' => 0 ]
+        [ 'splitter_id' => 1, 'band_index' => 5, 'signature_hash' => 'cfee4b3df4bfa094c75e7e388346a193068ef625023129549d76e014d1473558', 'current_value' => 0 ]
     );
     $this->assertDatabaseHas('refract_bands',
-        [ 'splitter_id' => 1, 'band_index' => 6, 'signature_hash' => '739db051b7948ce761df7a8acfc9adb7', 'current_value' => 1 ]
+        [ 'splitter_id' => 1, 'band_index' => 6, 'signature_hash' => '1362112153d641c66b2bb867f479e0f84b9509d545e8af072be2a668d05175ca', 'current_value' => 1 ]
     );
     $this->assertDatabaseHas('refract_bands',
-        [ 'splitter_id' => 1, 'band_index' => 7, 'signature_hash' => '913a83adc792544d676c8ab7ea824e8b', 'current_value' => 1 ]
+        [ 'splitter_id' => 1, 'band_index' => 7, 'signature_hash' => '551f01f498faea9af269c09a22faa6bd250b3e1b2c2e620a31620c24e1311d98', 'current_value' => 1 ]
     );
     $this->assertDatabaseHas('refract_bands',
-        [ 'splitter_id' => 1, 'band_index' => 8, 'signature_hash' => '4ce0fa6913ca395fd465246482cd4931', 'current_value' => 1 ]
+        [ 'splitter_id' => 1, 'band_index' => 8, 'signature_hash' => '6eb3d9ed036b00b9d4b4b4aa5fb7ea704a3c7668a012410340a7c789b7e1fe0c', 'current_value' => 1 ]
     );
 
     $this->assertDatabaseCount('refract_bands_params', 16);
