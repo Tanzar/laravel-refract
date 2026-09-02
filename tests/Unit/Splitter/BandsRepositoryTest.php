@@ -45,3 +45,22 @@ test('correctly updates database', function() {
     $this->assertDatabaseHas('refract_model_bands', [ 'splitter_id' => 1, 'model_id' => 1, 'band_index' => 1, 'current_value' => 5 ]);
     $this->assertDatabaseMissing('refract_model_bands', [ 'model_id' => 5 ]);
 });
+
+test('no delta and no pivot updates or deletes', function() {
+
+    $splitter = new TotalFoodsSplitter();
+
+    $calculator = Mockery::mock(BandsDeltaCalculator::class);
+
+    $calculator->shouldReceive('getDeltas')->andReturn([]);
+    $calculator->shouldReceive('getPivotUpdates')->andReturn([]);
+    $calculator->shouldReceive('getPivotDeletes')->andReturn([]);
+    $calculator->shouldReceive('getAffectedBandIndices')->andReturn([]);
+
+    $repository = new BandsRepository($splitter);
+
+    $repository->persist($calculator);
+
+    $this->assertDatabaseCount('refract_bands', 0);
+    $this->assertDatabaseCount('refract_model_bands', 0);
+});

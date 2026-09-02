@@ -349,3 +349,25 @@ test('SplitterUpdateJob updates existing tables', function () {
     );
 
 });
+
+test('batch cancellation works', function () {
+    Event::fake();
+    
+    $ids = Food::pluck('id')->all();
+    
+    [$job, $batch] = (new SplitterUpdateJob(TotalFoodsSplitter::class, $ids))
+        ->withFakeBatch();
+
+    $batch->cancel();
+
+    $job->handle(new SplitterProcessor());
+
+    $this->assertTrue($batch->cancelled());
+
+    $this->assertDatabaseCount('refract_params', 0);
+    $this->assertDatabaseCount('refract_splitters', 0);
+    $this->assertDatabaseCount('refract_model_bands', 0);
+    $this->assertDatabaseCount('refract_bands', 0);
+    $this->assertDatabaseCount('refract_bands_params', 0);
+
+});

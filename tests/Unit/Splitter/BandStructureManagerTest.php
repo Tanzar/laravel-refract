@@ -102,3 +102,23 @@ test('on empty database', function () {
     );
 
 });
+
+test('nothing to insert', function () {
+
+    $manager = new BandStructureManager(new TotalFoodsSplitter());
+
+    $manager->verify();
+
+    $this->assertDatabaseCount('refract_splitters', 1);
+    $this->assertDatabaseHas('refract_splitters', [
+        'splitter_type' => 'Workbench\\App\\Splitters\\TotalFoodsSplitter',
+        'model_type' => 'Workbench\\App\\Models\\Food',
+        'bands_count' => 0,
+        'encoded_params' => 'category:string:general;price:float:0;'
+    ]);
+
+    $this->assertDatabaseCount('refract_params', 0);
+    $this->assertDatabaseCount('refract_bands', 0);
+    $this->assertDatabaseCount('refract_bands_params', 0);
+
+});

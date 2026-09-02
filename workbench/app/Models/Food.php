@@ -5,6 +5,7 @@ namespace Workbench\App\Models;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Workbench\Database\Factories\FoodFactory;
 
@@ -23,7 +24,7 @@ use Workbench\Database\Factories\FoodFactory;
 class Food extends Model
 {
     /** @use HasFactory<FoodFactory> */
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
 
 }

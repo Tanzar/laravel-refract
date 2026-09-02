@@ -109,7 +109,7 @@ test('handles missing model and marks it for pivot delete while subtracting delt
     $previousState = (object) ['band_index' => 3, 'current_value' => 15.0];
     $previousStates = collect([99 => $previousState]);
 
-    $calculator->calculate([99], $previousStates, []);
+    $calculator->calculate([99, 100], $previousStates, []);
 
     expect($calculator->hasChanges())->toBeTrue()
         ->and($calculator->getDeltas())->toBe([3 => -15.0])

@@ -2,11 +2,14 @@
 
 namespace Tanzar\Refract\Helpers;
 
+use Illuminate\Support\Collection;
 use Tanzar\Refract\Exceptions\RefractException;
 use Tanzar\Refract\Splitter\Splitter;
 
 class RefractHelper
 {
+    private static ?Collection $instances = null;
+
     public static function precision(): int
     {
         return (int) config('refract.precision', 4);
