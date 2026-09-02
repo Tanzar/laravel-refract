@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\DB;
 use Mockery;
-use Tanzar\Refract\Services\SplitterUpdate\BandsDeltaCalculator;
-use Tanzar\Refract\Services\SplitterUpdate\BandsRepository;
+use Tanzar\Refract\Services\BandsDeltaCalculator;
+use Tanzar\Refract\Services\BandsRepository;
 use Workbench\App\Splitters\TotalFoodsSplitter;
 
 test('correctly updates database', function() {

@@ -1,7 +1,7 @@
 <?php
 
 use Mockery;
-use Tanzar\Refract\Services\SplitterUpdate\BandsDeltaCalculator;
+use Tanzar\Refract\Services\BandsDeltaCalculator;
 use Tanzar\Refract\Splitter\SplitterParams;
 
 beforeEach(function () {

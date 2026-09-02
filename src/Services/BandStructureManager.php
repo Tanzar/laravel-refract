@@ -1,6 +1,6 @@
 <?php
 
-namespace Tanzar\Refract\Services\SplitterUpdate;
+namespace Tanzar\Refract\Services;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;

@@ -11,7 +11,7 @@ use Illuminate\Queue\Attributes\Tries;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Tanzar\Refract\Helpers\RefractHelper;
-use Tanzar\Refract\Services\SplitterUpdate\SplitterProcessor;
+use Tanzar\Refract\Services\SplitterProcessor;
 use Tanzar\Refract\Splitter\Splitter;
 
 #[Tries(5)]

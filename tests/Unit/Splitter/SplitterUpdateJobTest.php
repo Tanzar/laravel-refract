@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 use Tanzar\Refract\Jobs\SplitterUpdateJob;
-use Tanzar\Refract\Services\SplitterUpdate\SplitterProcessor;
+use Tanzar\Refract\Services\SplitterProcessor;
 use Workbench\App\Models\Food;
 use Workbench\App\Splitters\TotalFoodsSplitter;
 

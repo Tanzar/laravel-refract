@@ -1,6 +1,6 @@
 <?php
 
-use Tanzar\Refract\Services\SplitterUpdate\BandStructureManager;
+use Tanzar\Refract\Services\BandStructureManager;
 use Tanzar\Refract\Splitter\RequiredParams;
 use Tanzar\Refract\Splitter\SplitterParams;
 use Workbench\App\Splitters\TotalFoodsSplitter;
