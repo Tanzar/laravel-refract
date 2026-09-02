@@ -10,6 +10,7 @@ use Illuminate\Queue\Attributes\Backoff;
 use Illuminate\Queue\Attributes\Tries;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Tanzar\Refract\Helpers\RefractHelper;
 use Tanzar\Refract\Services\SplitterUpdate\SplitterProcessor;
 use Tanzar\Refract\Splitter\Splitter;
 
@@ -27,7 +28,12 @@ class SplitterUpdateJob implements ShouldQueue
     public function __construct(
         public string $splitter,
         public array $modelIds = []
-    ) { }
+    )
+    {
+        $this->onQueue(
+            RefractHelper::splitter($this->splitter)->queue()
+        );
+    }
 
     public function handle(SplitterProcessor $processor): void
     {

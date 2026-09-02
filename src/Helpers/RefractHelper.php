@@ -2,7 +2,6 @@
 
 namespace Tanzar\Refract\Helpers;
 
-use Illuminate\Support\Collection;
 use Tanzar\Refract\Exceptions\RefractException;
 use Tanzar\Refract\Splitter\Splitter;
 
@@ -16,7 +15,7 @@ class RefractHelper
 
     public static function splitter(string $splitterClass): Splitter
     {
-        $aliases = config('refract.aliases', []);
+        $aliases = config('refract.splitters.aliases', []);
         
         $class = $aliases[$splitterClass] ?? $splitterClass;
 

@@ -83,4 +83,9 @@ abstract class Splitter
     {
         return $this->details;
     }
+
+    public function queue(): string
+    {
+        return config('refract.splitter.queue', 'default');
+    }
 }

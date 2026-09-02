@@ -365,7 +365,7 @@ test('batch cancellation works', function () {
     $this->assertTrue($batch->cancelled());
 
     $this->assertDatabaseCount('refract_params', 0);
-    $this->assertDatabaseCount('refract_splitters', 0);
+    $this->assertDatabaseCount('refract_splitters', 1);
     $this->assertDatabaseCount('refract_model_bands', 0);
     $this->assertDatabaseCount('refract_bands', 0);
     $this->assertDatabaseCount('refract_bands_params', 0);

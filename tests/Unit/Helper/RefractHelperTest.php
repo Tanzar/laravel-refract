@@ -17,7 +17,7 @@ test('creates new splitter from class name', function() {
 });
 
 test('creates new splitter from alias', function() {
-    config()->set('refract.aliases', [
+    config()->set('refract.splitters.aliases', [
         'test_splitter' => TotalFoodsSplitter::class,
     ]);
 
