@@ -8,7 +8,6 @@ use Tanzar\Refract\Splitter\Splitter;
 
 class RefractHelper
 {
-    private static ?Collection $instances = null;
 
     public static function precision(): int
     {
