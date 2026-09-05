@@ -19,7 +19,7 @@ class TotalFoodsSplitter extends Splitter
     }
 
     #[Override]
-    public function modelClass(): string
+    public static function modelClass(): string
     {
         return Food::class;
     }

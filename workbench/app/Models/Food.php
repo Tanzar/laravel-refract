@@ -18,6 +18,7 @@ use Workbench\Database\Factories\FoodFactory;
  * @property string $category
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
  * 
  */
 #[UseFactory(FoodFactory::class)]
@@ -26,5 +27,10 @@ class Food extends Model
     /** @use HasFactory<FoodFactory> */
     use HasFactory, SoftDeletes;
 
+    public $fillable = [
+        'name',
+        'price',
+        'category',
+    ];
 
 }

@@ -60,7 +60,7 @@ abstract class Splitter
         return $model::class !== $this->modelClass();
     }
 
-    abstract public function modelClass(): string;
+    abstract public static function modelClass(): string;
 
     protected function modelValue(Model $model): float
     {

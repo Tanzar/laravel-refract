@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tanzar\Refract;
 
 use Illuminate\Support\ServiceProvider;
+use Tanzar\Refract\Services\RefractTracker;
 
 class LaravelRefractServiceProvider extends ServiceProvider
 {
@@ -21,7 +22,7 @@ class LaravelRefractServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot(): void
+    public function boot(RefractTracker $tracker): void
     {
         $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
 
@@ -38,5 +39,7 @@ class LaravelRefractServiceProvider extends ServiceProvider
         ], ['refract', 'refract-migrations']);
 
         $this->commands([]);
+
+        $tracker->initialize();
     }
 }

@@ -3,6 +3,7 @@
 namespace Tanzar\Refract\Helpers;
 
 use Tanzar\Refract\Exceptions\RefractException;
+use Tanzar\Refract\Services\RefractOptimizer;
 use Tanzar\Refract\Splitter\Splitter;
 
 class RefractHelper
@@ -24,5 +25,10 @@ class RefractHelper
         }
 
         return app($class);
+    }
+
+    public static function optimizer(): RefractOptimizer
+    {
+        return new RefractOptimizer();
     }
 }
