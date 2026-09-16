@@ -3,8 +3,9 @@
 declare(strict_types=1);
 
 use Tanzar\Refract\LaravelRefractServiceProvider;
+use Tanzar\Refract\Services\Optimizer\RefractOptimizer;
 
-arch()->preset()->php();
+arch()->preset()->php()->ignoring(RefractOptimizer::class);
 
 arch()->preset()->security();
 
