@@ -11,12 +11,12 @@ use Illuminate\Queue\Attributes\Tries;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Tanzar\Refract\Helpers\RefractHelper;
-use Tanzar\Refract\Services\SplitterProcessor;
+use Tanzar\Refract\Services\Splitter\UpdateProcessor;
 use Tanzar\Refract\Splitter\Splitter;
 
 #[Tries(5)]
 #[Backoff([ 5, 10, 30 ])]
-class SplitterUpdateJob implements ShouldQueue
+final class SplitterUpdateJob implements ShouldQueue
 {
     use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -35,7 +35,7 @@ class SplitterUpdateJob implements ShouldQueue
         );
     }
 
-    public function handle(SplitterProcessor $processor): void
+    public function handle(UpdateProcessor $processor): void
     {
         if ($this->batch()?->cancelled()) {
             return;

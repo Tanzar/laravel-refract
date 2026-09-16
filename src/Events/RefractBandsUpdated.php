@@ -2,7 +2,7 @@
 
 namespace Tanzar\Refract\Events;
 
-class RefractBandsUpdated
+final class RefractBandsUpdated
 {
     /**
      * @param int $splitterId

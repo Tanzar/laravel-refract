@@ -7,12 +7,15 @@ use Illuminate\Support\Facades\Cache;
 use Tanzar\Refract\Helpers\RefractHelper;
 use Tanzar\Refract\Jobs\DispatchBufferedUpdatesJob;
 
-class SplittersUpdateBuffer
+final class UpdateBuffer
 {
     
     public function add(Model $model): void
     {
-        $splitters = RefractHelper::optimizer()->getSplitters($model);
+        $splitters = RefractHelper::optimizer()
+            ->splitters()
+            ->getForModel($model);
+
         if ($splitters === null) {
             return;
         }

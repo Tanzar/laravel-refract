@@ -17,7 +17,7 @@ use Tanzar\Refract\Enums\ParamTypes;
  * @property bool $bool_value
  */
 #[Table(name: 'refract_params', timestamps: false)]
-class RefractParam extends Model
+final class RefractParam extends Model
 {
      /**
      * Get the attributes that should be cast.

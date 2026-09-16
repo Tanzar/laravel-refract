@@ -1,15 +1,15 @@
 <?php
 
-namespace Tanzar\Refract\Services;
+namespace Tanzar\Refract\Services\Splitter;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
+use Tanzar\Refract\Events\RefractBandsUpdated;
 use Tanzar\Refract\Helpers\RefractHelper;
 use Tanzar\Refract\Splitter\Splitter;
 
-class SplitterProcessor
+final class UpdateProcessor
 {
     private Splitter $splitter;
 
@@ -22,26 +22,25 @@ class SplitterProcessor
         $this->splitter = RefractHelper::splitter($splitterClass);
 
         $models = $this->loadModels($modelIds);
-        $previousStates = $this->loadPreviousStates($modelIds);
 
         $structure = new BandStructureManager($this->splitter);
-        $deltaCalculator = new BandsDeltaCalculator();
+        $deltaCalculator = new DeltaCalculator($this->splitter->id(), $modelIds);
+
         foreach ($models as $model) {
             $params = $this->splitter->split($model);
 
             if ($params !== null) {
                 $structure->analyze($params);
+
                 $deltaCalculator->analyze($params);
             }
         }
         
         $existingHashesMap = $structure->verify();
 
-        $deltaCalculator->calculate($modelIds, $previousStates, $existingHashesMap);
+        $deltaCalculator->calculate($existingHashesMap);
 
-        if ($deltaCalculator->hasChanges()) {
-            (new BandsRepository($this->splitter))->persist($deltaCalculator, $isBatch);
-        }
+        $this->persist($deltaCalculator, $isBatch);
     }
     
     /**
@@ -65,18 +64,20 @@ class SplitterProcessor
         return $query->whereIn($key, $modelIds)->get();
     }
 
-    /**
-     * @param int[] $modelIds
-     * @return Collection<int, object{band_index: int, current_value: float}>
-     */
-    private function loadPreviousStates(array $modelIds): Collection
+    private function persist(DeltaCalculator $calculator, bool $isBatch): void
     {
-        /** @var Collection<int, object{band_index: int, current_value: float}> */
-        return DB::table('refract_model_bands')
-            ->where('splitter_id', $this->splitter->getDetails()->id)
-            ->whereIn('model_id', $modelIds)
-            ->get(['model_id', 'band_index', 'current_value'])
-            ->keyBy('model_id');
+        if ($calculator->hasChanges()) {
+            $calculator->getDeltas()->persist();
+            $calculator->getPivots()
+                ->persistUpdates()
+                ->persistDeletes();
+
+            event(new RefractBandsUpdated(
+                $this->splitter->id(),
+                $calculator->getDeltas()->affectedBands(),
+                $isBatch
+            ));
+        }
     }
 
 }

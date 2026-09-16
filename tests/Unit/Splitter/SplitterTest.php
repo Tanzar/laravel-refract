@@ -14,16 +14,13 @@ test('Splitter dont make new records', function () {
         'encoded_params' => "category:string:general;price:float:0;",
     ]);
 
-    $details = $splitter->getDetails();
+    $details = $splitter->id();
 
-    expect($details)
-        ->and($details->splitter_type)->toBe(TotalFoodsSplitter::class)
-        ->and($details->model_type)->toBe(Food::class)
-        ->and($details->encoded_params)->toBe("category:string:general;price:float:0;");
+    expect($details)->toBe(1);
 
     $secondInstance = new TotalFoodsSplitter();
 
-    expect($secondInstance->getDetails()->id)->toBe($details->id);
+    expect($secondInstance->id())->toBe(1);
 
     $this->assertDatabaseCount('refract_splitters', 1);
 });

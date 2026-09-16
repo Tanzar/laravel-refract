@@ -60,6 +60,9 @@ abstract class Splitter
         return $model::class !== $this->modelClass();
     }
 
+    /**
+     * @return class-string<Model>
+     */
     abstract public static function modelClass(): string;
 
     protected function modelValue(Model $model): float
@@ -79,9 +82,9 @@ abstract class Splitter
         return [];
     }
 
-    public function getDetails(): RefractSplitter
+    final public function id(): int
     {
-        return $this->details;
+        return $this->details->id;
     }
 
     public function queue(): string

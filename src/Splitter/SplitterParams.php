@@ -7,7 +7,7 @@ use Override;
 use Tanzar\Refract\Enums\ParamTypes;
 use Tanzar\Refract\Exceptions\RefractException;
 
-class SplitterParams implements SplitterParamsInterface
+final class SplitterParams implements SplitterParamsInterface
 {
     /** @var array<string, array{type: ParamTypes, value: mixed}> */
     private array $params = [];

@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $encoded_params
  */
 #[Table(name: 'refract_splitters', timestamps: false)]
-class RefractSplitter extends Model
+final class RefractSplitter extends Model
 {
     
 }

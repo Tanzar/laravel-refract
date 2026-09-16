@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Queue;
 use Tanzar\Refract\Jobs\DispatchBufferedUpdatesJob;
-use Tanzar\Refract\Services\SplittersUpdateBuffer;
+use Tanzar\Refract\Services\UpdateBuffer;
 use Workbench\App\Models\Food;
 use Workbench\App\Models\User;
 
@@ -20,7 +20,7 @@ beforeEach(function () {
 test('add method', function () {
     Queue::fake();
 
-    $buffer = new SplittersUpdateBuffer();
+    $buffer = new UpdateBuffer();
 
     $buffer->add(new User());
 
@@ -46,7 +46,7 @@ test('add method', function () {
 test('empty buffer method', function () {
     Queue::fake();
 
-    $buffer = new SplittersUpdateBuffer();
+    $buffer = new UpdateBuffer();
     
     $model = new Food();
     $model->name = 'name';

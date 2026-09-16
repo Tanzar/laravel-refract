@@ -3,11 +3,11 @@
 namespace Tanzar\Refract\Observers;
 
 use Illuminate\Database\Eloquent\Model;
-use Tanzar\Refract\Services\SplittersUpdateBuffer;
+use Tanzar\Refract\Services\UpdateBuffer;
 
-class RefractModelObserver
+final class RefractModelObserver
 {
-    public function __construct(private SplittersUpdateBuffer $buffer)
+    public function __construct(private UpdateBuffer $buffer)
     { }
 
     public function created(Model $model): void
@@ -34,6 +34,4 @@ class RefractModelObserver
     {
         $this->buffer->add($model);
     }
-
-
 }

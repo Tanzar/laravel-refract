@@ -6,7 +6,7 @@ use Illuminate\Support\Carbon;
 use Override;
 use Tanzar\Refract\Enums\ParamTypes;
 
-class RequiredParams implements RequiredParamsInterface
+final class RequiredParams implements RequiredParamsInterface
 {
     /** @var array<string, array{type: ParamTypes, value: mixed}> */
     private array $keys = [];

@@ -5,8 +5,6 @@ declare(strict_types=1);
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Tanzar\Refract\Models\RefractParam;
-use Tanzar\Refract\Models\RefractSplitter;
 
 return new class extends Migration
 {
@@ -35,7 +33,7 @@ return new class extends Migration
 
         Schema::create('refract_model_bands', function(Blueprint $table) {
             $table->unsignedBigInteger('model_id');
-            $table->foreignIdFor(RefractSplitter::class, 'splitter_id');
+            $table->foreignId('splitter_id')->constrained('refract_splitters');
             $table->unsignedBigInteger('band_index');
             $table->float('current_value');
 
@@ -43,7 +41,7 @@ return new class extends Migration
         });
 
         Schema::create('refract_bands', function(Blueprint $table) {
-            $table->foreignIdFor(RefractSplitter::class, 'splitter_id');
+            $table->foreignId('splitter_id')->constrained('refract_splitters');
             $table->unsignedBigInteger('band_index');
             $table->string('signature_hash');
             $table->float('current_value');
@@ -52,9 +50,9 @@ return new class extends Migration
         });
 
         Schema::create('refract_bands_params', function(Blueprint $table) {
-            $table->foreignIdFor(RefractSplitter::class, 'splitter_id');
+            $table->foreignId('splitter_id')->constrained('refract_splitters');
             $table->unsignedBigInteger('band_index');
-            $table->foreignIdFor(RefractParam::class, 'param_id');
+            $table->foreignId('param_id')->constrained('refract_params');
             $table->string('key_name');
 
             $table->primary([ 'splitter_id', 'band_index', 'param_id', 'key_name' ]);

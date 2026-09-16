@@ -5,15 +5,13 @@ namespace Tanzar\Refract\Services;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
+use Tanzar\Refract\Helpers\RefractHelper;
 use Tanzar\Refract\Observers\RefractModelObserver;
 
-class RefractTracker
+final class RefractTracker
 {
     /** @var array<class-string<Model>, bool> $trackedModels */
     private array $trackedModels = [];
-
-    public function __construct(private RefractOptimizer $optimizer) { }
-
 
     public function initialize(): void
     {
@@ -22,16 +20,10 @@ class RefractTracker
             /** @var class-string<Model> $model */
             $model = Str::of($eventName)->after('eloquent.booted: ')->toString();
 
-            if (
-                isset($this->trackedModels[$model]) ||
-                !$this->optimizer->isTrackable($model)
-            ) {
-                return;
+            if (!isset($this->trackedModels[$model]) && RefractHelper::optimizer()->isTrackable($model)) {
+                $model::observe(RefractModelObserver::class);
+                $this->trackedModels[$model] = true;
             }
-
-            $model::observe(RefractModelObserver::class);
-            $this->trackedModels[$model] = true;
         });
     }
-
 }

@@ -1,13 +1,13 @@
 <?php
 
-namespace Tanzar\Refract\Services;
+namespace Tanzar\Refract\Services\Splitter;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Tanzar\Refract\Splitter\Splitter;
 use Tanzar\Refract\Splitter\SplitterParams;
 
-class BandStructureManager
+final class BandStructureManager
 {
     /** @var Collection<string, mixed[]> $paramsToInsert */
     private Collection $paramsToInsert;
@@ -98,7 +98,7 @@ class BandStructureManager
     private function getExistingBandsMap(): Collection
     {
         return DB::table('refract_bands')
-            ->where('splitter_id', $this->splitter->getDetails()->id)
+            ->where('splitter_id', $this->splitter->id())
             ->whereIn('signature_hash', $this->bandParamsMap->keys())
             ->pluck('band_index', 'signature_hash');
     }
@@ -126,7 +126,7 @@ class BandStructureManager
             $existingHashes->put($hash, $newIndex);
 
             $bandsToInsert[] = [
-                'splitter_id' => $this->splitter->getDetails()->id,
+                'splitter_id' => $this->splitter->id(),
                 'band_index' => $newIndex,
                 'signature_hash' => $hash,
                 'current_value' => 0,
@@ -134,7 +134,7 @@ class BandStructureManager
 
             foreach ($this->bandParamsMap[$hash] as $paramName => $paramKey) {
                 $pivotToInsert[] = [
-                    'splitter_id' => $this->splitter->getDetails()->id,
+                    'splitter_id' => $this->splitter->id(),
                     'band_index' => $newIndex,
                     'param_id' => $paramMap->get($paramKey),
                     'key_name' => $paramName
@@ -160,14 +160,14 @@ class BandStructureManager
     {
         return DB::transaction(function () use ($count): array {
             $splitter = DB::table('refract_splitters')
-                ->where('id', $this->splitter->getDetails()->id)
+                ->where('id', $this->splitter->id())
                 ->lockForUpdate()
                 ->first();
 
             $startIndex = $splitter->bands_count + 1;
 
             DB::table('refract_splitters')
-                ->where('id', $this->splitter->getDetails()->id)
+                ->where('id', $this->splitter->id())
                 ->increment('bands_count', $count);
 
             $result = [];
