@@ -10,9 +10,9 @@ use Illuminate\Queue\Attributes\Backoff;
 use Illuminate\Queue\Attributes\Tries;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Tanzar\Refract\Helpers\RefractHelper;
-use Tanzar\Refract\Services\Splitter\UpdateProcessor;
+use Tanzar\Refract\Services\SplitterService;
 use Tanzar\Refract\Splitter\Splitter;
+use Tanzar\Refract\Support\RefractFactory;
 
 #[Tries(5)]
 #[Backoff([ 5, 10, 30 ])]
@@ -25,26 +25,19 @@ final class SplitterUpdateJob implements ShouldQueue
      * @param class-string<Splitter> $splitter
      * @param int[] $modelIds
      */
-    public function __construct(
-        public string $splitter,
-        public array $modelIds = []
-    )
+    public function __construct(public string $splitter, public array $modelIds = [])
     {
-        $this->onQueue(
-            RefractHelper::splitter($this->splitter)->queue()
-        );
+        $queue = RefractFactory::splitter($this->splitter)->queue();
+
+        $this->onQueue($queue);
     }
 
-    public function handle(UpdateProcessor $processor): void
+    public function handle(SplitterService $service): void
     {
         if ($this->batch()?->cancelled()) {
             return;
         }
 
-        $processor->processChunk(
-            $this->splitter,
-            $this->modelIds,
-            $this->batchId !== null
-        );
+        $service->update($this->splitter, $this->modelIds);
     }
 }

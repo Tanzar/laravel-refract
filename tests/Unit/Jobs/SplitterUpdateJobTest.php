@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 use Tanzar\Refract\Jobs\SplitterUpdateJob;
-use Tanzar\Refract\Services\Splitter\UpdateProcessor;
+use Tanzar\Refract\Services\SplitterService;
 use Workbench\App\Models\Food;
 use Workbench\App\Splitters\TotalFoodsSplitter;
 
@@ -26,7 +26,7 @@ test('SplitterUpdateJob fills empty tables', function () {
 
     $job = new SplitterUpdateJob(TotalFoodsSplitter::class, $ids);
 
-    $job->handle(new UpdateProcessor());
+    $job->handle(new SplitterService());
 
     $this->assertDatabaseCount('refract_params', 8);
 
@@ -284,7 +284,7 @@ test('SplitterUpdateJob updates existing tables', function () {
 
     $job = new SplitterUpdateJob(TotalFoodsSplitter::class, $ids);
 
-    $job->handle(new UpdateProcessor());
+    $job->handle(new SplitterService());
 
     $this->assertDatabaseCount('refract_params', 10);
 
@@ -360,7 +360,7 @@ test('batch cancellation works', function () {
 
     $batch->cancel();
 
-    $job->handle(new UpdateProcessor());
+    $job->handle(new SplitterService());
 
     $this->assertTrue($batch->cancelled());
 

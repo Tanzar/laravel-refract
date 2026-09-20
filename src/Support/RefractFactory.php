@@ -1,14 +1,17 @@
 <?php
 
-namespace Tanzar\Refract\Helpers;
+namespace Tanzar\Refract\Support;
 
+use Tanzar\Refract\Config\RefractConfig;
 use Tanzar\Refract\Exceptions\RefractException;
-use Tanzar\Refract\Services\Optimizer\RefractOptimizer;
 use Tanzar\Refract\Splitter\Splitter;
+use Tanzar\Refract\Support\Tracking\TrackingMap;
 
-final class RefractHelper
+/**
+ * Creates instances of required classes
+ */
+class RefractFactory
 {
-
     public static function splitter(string $splitterClass): Splitter
     {
         $aliases = RefractConfig::aliases();
@@ -22,8 +25,8 @@ final class RefractHelper
         return app($class);
     }
 
-    public static function optimizer(): RefractOptimizer
+    public static function trackMap(): TrackingMap
     {
-        return new RefractOptimizer();
+        return new TrackingMap();
     }
 }

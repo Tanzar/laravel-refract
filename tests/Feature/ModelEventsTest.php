@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Queue;
-use Tanzar\Refract\Jobs\DispatchBufferedUpdatesJob;
+use Tanzar\Refract\Jobs\DispatchUpdatesJob;
 use Workbench\App\Models\Food;
 
 use function Orchestra\Testbench\workbench_path;
@@ -24,7 +24,7 @@ test('model creation', function() {
     $food->price = 10.0;
     $food->save();
 
-    Queue::assertPushed(DispatchBufferedUpdatesJob::class);
+    Queue::assertPushed(DispatchUpdatesJob::class);
 });
 
 test('model quiet selection', function() {
@@ -36,7 +36,7 @@ test('model quiet selection', function() {
     $food->price = 10.0;
     $food->saveQuietly();
 
-    Queue::assertNotPushed(DispatchBufferedUpdatesJob::class);
+    Queue::assertNotPushed(DispatchUpdatesJob::class);
 });
 
 
@@ -56,7 +56,7 @@ test('model update', function() {
     $food->price = 15.0;
     $food->save();
 
-    Queue::assertPushed(DispatchBufferedUpdatesJob::class);
+    Queue::assertPushed(DispatchUpdatesJob::class);
 });
 
 test('model soft delete', function() {
@@ -72,7 +72,7 @@ test('model soft delete', function() {
 
     Food::first()->delete();
 
-    Queue::assertPushed(DispatchBufferedUpdatesJob::class);
+    Queue::assertPushed(DispatchUpdatesJob::class);
 });
 
 
@@ -90,7 +90,7 @@ test('model restore', function() {
 
     Food::withTrashed()->first()->restore();
 
-    Queue::assertPushed(DispatchBufferedUpdatesJob::class);
+    Queue::assertPushed(DispatchUpdatesJob::class);
 });
 
 
@@ -107,6 +107,6 @@ test('model force delete', function() {
 
     Food::first()->forceDelete();
 
-    Queue::assertPushed(DispatchBufferedUpdatesJob::class);
+    Queue::assertPushed(DispatchUpdatesJob::class);
 });
 

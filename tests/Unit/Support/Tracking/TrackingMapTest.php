@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
-use Tanzar\Refract\Services\Optimizer\RefractOptimizer;
 use \Mockery;
+use Tanzar\Refract\Support\Tracking\TrackingMap;
 
 use function Orchestra\Testbench\workbench_path;
 
@@ -38,13 +38,11 @@ test('splitter in config, class not exist', function () {
         ->with($path)
         ->andReturn($data);
 
-    $optimizer = new RefractOptimizer();
-
     Log::shouldReceive('warning')
         ->once()
         ->with('RefractTracker: Model class Workbench\App\Models\Peon does not exist.');
 
-    $optimizer->isTrackable('Workbench\App\Models\Peon');
+    new TrackingMap()->isTrackable('Workbench\App\Models\Peon');
 });
 
 test('splitter in config, classnot extending Model', function () {
@@ -71,20 +69,17 @@ test('splitter in config, classnot extending Model', function () {
         ->with($path)
         ->andReturn($data);
 
-    $optimizer = new RefractOptimizer();
-
     Log::shouldReceive('warning')
         ->once()
         ->with('RefractTracker: Class Workbench\Database\Factories\UserFactory is not an Eloquent model.');
     
-    $optimizer->isTrackable('Workbench\Database\Factories\UserFactory');
+    new TrackingMap()->isTrackable('Workbench\Database\Factories\UserFactory');
 });
 
 test('creates cache file', function () {
     File::spy();
 
-    $optimizer = new RefractOptimizer();
-    $optimizer->saveCache();
+    new TrackingMap()->saveCache();
 
     File::shouldHaveReceived('put')
         ->once()

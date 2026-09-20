@@ -1,6 +1,6 @@
 <?php
 
-namespace Tanzar\Refract\Helpers;
+namespace Tanzar\Refract\Config;
 
 use Tanzar\Refract\Splitter\Splitter;
 
@@ -27,5 +27,15 @@ final class RefractConfig
     public static function aliases(): array
     {
         return config('refract.splitters.aliases', []);
+    }
+
+    public static function splittersDefaultQueue(): string
+    {
+        return config('refract.splitters.queue', 'default');
+    }
+
+    public static function bufferDelay(): int
+    {
+        return config('refract.buffer_delay', 10);
     }
 }

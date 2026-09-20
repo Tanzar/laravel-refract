@@ -1,15 +1,15 @@
 <?php
 
-namespace Tanzar\Refract\Services\Optimizer;
+namespace Tanzar\Refract\Support\Tracking;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\Finder\Finder;
-use Tanzar\Refract\Helpers\RefractConfig;
+use Tanzar\Refract\Config\RefractConfig;
 use Tanzar\Refract\Splitter\Splitter;
 
-final class RefractOptimizer
+final class TrackingMap
 {
     private SplittersMap $splitters;
 
@@ -118,7 +118,7 @@ final class RefractOptimizer
             return false;
         }
 
-        if (!is_subclass_of($model, 'Illuminate\Database\Eloquent\Model')) {
+        if (!is_subclass_of($model, Model::class)) {
             Log::warning("RefractTracker: Class {$model} is not an Eloquent model.");
             return false;
         }

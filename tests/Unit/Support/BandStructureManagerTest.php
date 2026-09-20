@@ -1,8 +1,8 @@
 <?php
 
-use Tanzar\Refract\Services\Splitter\BandStructureManager;
 use Tanzar\Refract\Splitter\RequiredParams;
 use Tanzar\Refract\Splitter\SplitterParams;
+use Tanzar\Refract\Support\BandStructureManager;
 use Workbench\App\Splitters\TotalFoodsSplitter;
 
 test('on empty database', function () {

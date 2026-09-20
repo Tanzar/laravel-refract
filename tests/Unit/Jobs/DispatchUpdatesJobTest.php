@@ -1,10 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Queue;
-use Mockery;
-use Tanzar\Refract\Jobs\DispatchBufferedUpdatesJob;
+use Tanzar\Refract\Jobs\DispatchUpdatesJob;
 use Tanzar\Refract\Jobs\SplitterUpdateJob;
-use Tanzar\Refract\Services\UpdateBuffer;
+use Tanzar\Refract\Services\SplitterService;
 use Workbench\App\Models\Food;
 
 use function Orchestra\Testbench\workbench_path;
@@ -18,18 +17,18 @@ test('job dispatches update jobs', function () {
     Queue::fake();
 
     $ids = [12, 15, 76, 33, 45];
-    $buffer = new UpdateBuffer();
+    $service = new SplitterService();
 
     foreach($ids as $id) {
         $model = new Food();
         $model->id = $id;
 
-        $buffer->add($model);
+        $service->addToUpdate($model);
     }
 
-    $job = new DispatchBufferedUpdatesJob();
+    $job = new DispatchUpdatesJob();
 
-    $job->handle($buffer);
+    $job->handle($service);
 
     Queue::assertPushed(SplitterUpdateJob::class, function (SplitterUpdateJob $job) {
         return $job->splitter === 'Workbench\App\Splitters\TotalFoodsSplitter' &&

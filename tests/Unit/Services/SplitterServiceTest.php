@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Queue;
-use Tanzar\Refract\Jobs\DispatchBufferedUpdatesJob;
-use Tanzar\Refract\Services\UpdateBuffer;
+use Tanzar\Refract\Jobs\DispatchUpdatesJob;
+use Tanzar\Refract\Services\SplitterService;
 use Workbench\App\Models\Food;
 use Workbench\App\Models\User;
 
@@ -20,9 +20,9 @@ beforeEach(function () {
 test('add method', function () {
     Queue::fake();
 
-    $buffer = new UpdateBuffer();
+    $service = new SplitterService();
 
-    $buffer->add(new User());
+    $service->addToUpdate(new User());
 
     expect(Cache::has('splitters_update_buffer'))->toBeFalse();
 
@@ -34,33 +34,33 @@ test('add method', function () {
     $model->price = 10.0;
     $model->saveQuietly();
 
-    $buffer->add($model);
+    $service->addToUpdate($model);
 
     expect(Cache::has('splitters_update_buffer'))->toBeTrue();
     expect(Cache::get('splitters_update_buffer'))
         ->toBe([ 'Workbench\App\Splitters\TotalFoodsSplitter' => [ 1 ] ]);
 
-    Queue::assertPushed(DispatchBufferedUpdatesJob::class);
+    Queue::assertPushed(DispatchUpdatesJob::class);
 });
 
 test('empty buffer method', function () {
     Queue::fake();
 
-    $buffer = new UpdateBuffer();
-    
+    $service = new SplitterService();
+
     $model = new Food();
     $model->name = 'name';
     $model->category = 'cat';
     $model->price = 10.0;
     $model->saveQuietly();
 
-    $buffer->add($model);
+    $service->addToUpdate($model);
 
     expect(Cache::has('splitters_update_buffer'))->toBeTrue();
     expect(Cache::get('splitters_update_buffer'))
         ->toBe([ 'Workbench\App\Splitters\TotalFoodsSplitter' => [ 1 ] ]);
 
-    $array = $buffer->emptyBuffer();
+    $array = $service->getBufferedUpdates();
 
     expect($array)
         ->toBe([ 'Workbench\App\Splitters\TotalFoodsSplitter' => [ 1 ] ]);

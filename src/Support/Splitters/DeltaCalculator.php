@@ -1,10 +1,10 @@
 <?php
 
-namespace Tanzar\Refract\Services\Splitter;
+namespace Tanzar\Refract\Support\Splitters;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use Tanzar\Refract\Helpers\RefractConfig;
+use Tanzar\Refract\Config\RefractConfig;
 use Tanzar\Refract\Splitter\SplitterParams;
 
 final class DeltaCalculator

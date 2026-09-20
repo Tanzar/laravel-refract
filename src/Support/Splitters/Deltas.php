@@ -1,9 +1,9 @@
 <?php
 
-namespace Tanzar\Refract\Services\Splitter;
+namespace Tanzar\Refract\Support\Splitters;
 
 use Illuminate\Support\Facades\DB;
-use Tanzar\Refract\Helpers\RefractConfig;
+use Tanzar\Refract\Config\RefractConfig;
 
 final class Deltas
 {

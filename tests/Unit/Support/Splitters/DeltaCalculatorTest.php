@@ -2,9 +2,9 @@
 
 use Illuminate\Support\Facades\DB;
 use Mockery;
-use Tanzar\Refract\Services\Splitter\DeltaCalculator;
 use Tanzar\Refract\Splitter\RequiredParams;
 use Tanzar\Refract\Splitter\SplitterParams;
+use Tanzar\Refract\Support\Splitters\DeltaCalculator;
 use Workbench\App\Models\Food;
 
 beforeEach(function () {

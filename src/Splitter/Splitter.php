@@ -3,6 +3,7 @@
 namespace Tanzar\Refract\Splitter;
 
 use Illuminate\Database\Eloquent\Model;
+use Tanzar\Refract\Config\RefractConfig;
 use Tanzar\Refract\Models\RefractSplitter;
 
 abstract class Splitter
@@ -89,6 +90,6 @@ abstract class Splitter
 
     public function queue(): string
     {
-        return config('refract.splitter.queue', 'default');
+        return RefractConfig::splittersDefaultQueue();
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tanzar\Refract\Services\Optimizer;
+namespace Tanzar\Refract\Support\Tracking;
 
 use Illuminate\Database\Eloquent\Model;
 use ReflectionClass;
