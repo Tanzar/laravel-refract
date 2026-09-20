@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 use Tanzar\Refract\LaravelRefractServiceProvider;
-use Tanzar\Refract\Services\Optimizer\RefractOptimizer;
+use Tanzar\Refract\Support\Tracking\TrackingMap;
 
-arch()->preset()->php()->ignoring(RefractOptimizer::class);
+arch()->preset()->php()->ignoring(TrackingMap::class);
 
 arch()->preset()->security();
 
