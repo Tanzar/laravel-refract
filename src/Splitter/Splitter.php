@@ -92,4 +92,9 @@ abstract class Splitter
     {
         return RefractConfig::splittersDefaultQueue();
     }
+
+    public function requiredKeys(): RequiredParams
+    {
+        return $this->requiredKeys;
+    }
 }

@@ -56,6 +56,11 @@ final class RequiredParams implements RequiredParamsInterface
         return isset($this->keys[$name]) && $this->keys[$name]['type'] === $type;
     }
 
+    public function haveKey(string $name): bool
+    {
+        return isset($this->keys[$name]);
+    }
+
     public function getType(string $name): ?ParamTypes
     {
         return $this->keys[$name]['type'] ?? null;

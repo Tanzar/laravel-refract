@@ -80,7 +80,7 @@ test('RequiredParams boolean', function() {
     expect($instance->have('isDead', ParamTypes::BOOLEAN))->toBe(true);
 });
 
-test('RequiredParams getKeys() method', function() {
+test('getKeys() method', function() {
     
     $instance = new RequiredParams();
 
@@ -92,8 +92,33 @@ test('RequiredParams getKeys() method', function() {
 
     expect($instance->getKeys())
         ->toBe([ 'created', 'user', 'price', 'transaction_type', 'isDead' ]);
+});
+
+test('encode() method', function() {
+    
+    $instance = new RequiredParams();
+
+    $instance->date('created', Carbon::parse('2026-08-22'));
+    $instance->int('user', 123);
+    $instance->float('price', 1.53);
+    $instance->string('transaction_type', 'cash');
+    $instance->bool('isDead', true);
 
     expect($instance->encode())
         ->toBe("created:date:2026-08-22;user:int:123;price:float:1.53;transaction_type:string:cash;isDead:bool:1;");
+});
+
+test('haveKey() method', function() {
+    
+    $instance = new RequiredParams();
+
+    $instance->date('created', Carbon::parse('2026-08-22'));
+    $instance->int('user', 123);
+    $instance->float('price', 1.53);
+    $instance->string('transaction_type', 'cash');
+    $instance->bool('isDead', true);
+
+    expect($instance->haveKey('user'))->toBeTrue();
+    expect($instance->haveKey('group'))->toBeFalse();
 });
 

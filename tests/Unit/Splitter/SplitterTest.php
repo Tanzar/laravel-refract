@@ -1,5 +1,6 @@
 <?php
 
+use Tanzar\Refract\Splitter\RequiredParams;
 use Tanzar\Refract\Splitter\SplitterParams;
 use Workbench\App\Models\Food;
 use Workbench\App\Models\User;
@@ -57,4 +58,12 @@ test('Splitter relations method', function () {
     $relations = $splitter->relations();
 
     expect($relations)->toBe([]);
+});
+
+test('Splitter required keys method', function () {
+    $splitter = new TotalFoodsSplitter();
+
+    $required = $splitter->requiredKeys();
+
+    expect($required)->toBeInstanceOf(RequiredParams::class);
 });

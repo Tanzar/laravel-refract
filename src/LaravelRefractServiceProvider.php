@@ -24,22 +24,22 @@ class LaravelRefractServiceProvider extends ServiceProvider
      */
     public function boot(RefractTracker $tracker): void
     {
+        $tracker->initialize();
+        
         $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
 
-        if (! $this->app->runningInConsole()) {
-            return;
+        if ($this->app->runningInConsole()) {
+            
+            $this->publishes([
+                __DIR__.'/../config/refract.php' => config_path('refract.php'),
+            ], ['refract', 'refract-config']);
+
+            $this->publishesMigrations([
+                __DIR__.'/../database/migrations' => database_path('migrations'),
+            ], ['refract', 'refract-migrations']);
+
+            $this->commands([]);
         }
 
-        $this->publishes([
-            __DIR__.'/../config/refract.php' => config_path('refract.php'),
-        ], ['refract', 'refract-config']);
-
-        $this->publishesMigrations([
-            __DIR__.'/../database/migrations' => database_path('migrations'),
-        ], ['refract', 'refract-migrations']);
-
-        $this->commands([]);
-
-        $tracker->initialize();
     }
 }
