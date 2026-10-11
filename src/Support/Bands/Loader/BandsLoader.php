@@ -6,6 +6,7 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use stdClass;
 use Tanzar\Refract\Exceptions\RefractException;
 use Tanzar\Refract\Splitter\Splitter;
 use Tanzar\Refract\Support\Bands\Bands;
@@ -91,7 +92,7 @@ class BandsLoader
                         $first = $bandRows->first();
 
                         $path = [];
-                        $bandRows->each(function ($row) use (&$path) {
+                        $bandRows->each(function (stdClass $row) use (&$path) {
                             if (!is_null($row->key_name)) {
                                 $path[$row->key_name] = $row->raw_value;
                             }
@@ -118,7 +119,10 @@ class BandsLoader
 
     private function buildFiltersConditions(Builder $query): void
     {
-         /** @var LoaderCondition $condition */
+         /**
+          * @var string $key
+          * @var LoaderCondition $condition
+          */
         foreach ($this->conditions as $key => $condition) {
             $query->whereExists(function (Builder $sub) use ($key, $condition) {
                 $sub->select(DB::raw(1))
