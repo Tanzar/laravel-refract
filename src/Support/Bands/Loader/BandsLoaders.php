@@ -35,7 +35,7 @@ class BandsLoaders
          * @var BandsLoader $loader
          */
         foreach ($this->loaders as $key => $loader) {
-            $bands->add($key, $loader->load());
+            $bands->add($key, $loader->splitter(), $loader->load());
         }
         return $bands;
     }

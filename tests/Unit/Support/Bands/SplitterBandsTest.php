@@ -16,8 +16,8 @@ test('correctly manages finders', function() {
 
     expect($bands->find()->where('type', 'paid')->value())->toBe(22.0);
     expect($bands->find()->where('type', 'waiting')->value())->toBe(28.0);
-    expect($bands->dumpRequestedBands())->toBe([1, 2, 3, 4]);
-    expect($bands->dumpRequestedBands())->toBe([]);
+    expect($bands->pullRequestedBands())->toBe([1, 2, 3, 4]);
+    expect($bands->pullRequestedBands())->toBe([]);
 
     expect($bands->find()->where('group', 1)->value())->toBe(26.0);
 });

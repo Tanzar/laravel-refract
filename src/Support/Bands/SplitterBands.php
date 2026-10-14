@@ -26,7 +26,7 @@ class SplitterBands implements SplitterBandsInterface
     /**
      * @return int[]
      */
-    public function dumpRequestedBands(): array
+    public function pullRequestedBands(): array
     {
         $bands = [];
 

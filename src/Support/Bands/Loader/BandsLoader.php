@@ -14,7 +14,7 @@ use Tanzar\Refract\Support\Bands\Tree\BandsBranch;
 use Tanzar\Refract\Support\Filters\Filters;
 use Tanzar\Refract\Support\RefractFactory;
 
-class BandsLoader
+class BandsLoader implements BandsLoaderInterface
 {
     private Splitter $splitter;
 
@@ -29,7 +29,12 @@ class BandsLoader
         $this->conditions = collect();
     }
 
-    public function where(string $key, mixed $value, string $operator = '='): self
+    public function splitter(): Splitter
+    {
+        return $this->splitter;
+    }
+
+    public function where(string $key, mixed $value, string $operator = '='): BandsLoaderInterface
     {
         $this->checkKey($key);
 
@@ -42,7 +47,7 @@ class BandsLoader
      * @param mixed[] $values
      * @return BandsLoader
      */
-    public function whereIn(string $key, array $values): self
+    public function whereIn(string $key, array $values): BandsLoaderInterface
     {
         $this->checkKey($key);
 
@@ -50,7 +55,7 @@ class BandsLoader
         return $this;
     }
 
-    public function whereBetween(string $key, mixed $from, mixed $to): self
+    public function whereBetween(string $key, mixed $from, mixed $to): BandsLoaderInterface
     {
         $this->checkKey($key);
 
@@ -58,7 +63,7 @@ class BandsLoader
         return $this;
     }
 
-    public function load(): SplitterBandsInterface
+    public function load(): SplitterBands
     {
         if ($this->conditions->isEmpty()) {
             throw new RefractException('Loader must have at least 1 condition set');

@@ -20,7 +20,7 @@ test('loads and finds correct bands', function () {
     $bands = $loader->load();
     expect($bands->find()->value())->toBe(2.0);
     /** @var SplitterBands $bands */
-   expect($bands->dumpRequestedBands())->toBe([4, 5]);
+   expect($bands->pullRequestedBands())->toBe([4, 5]);
 
     $second = new BandsLoader(TotalFoodsSplitter::class, $filters);
     $second->whereIn('category', [ 'Fruit', 'Vegetable' ]);
@@ -28,7 +28,7 @@ test('loads and finds correct bands', function () {
 
     expect($secondBands->find()->value())->toBe(4.0);
     /** @var SplitterBands $secondBands */
-    expect($secondBands->dumpRequestedBands())->toBe([3, 4, 5, 6]);
+    expect($secondBands->pullRequestedBands())->toBe([3, 4, 5, 6]);
 });
 
 test('loads empty when not found bands', function() {
@@ -43,7 +43,7 @@ test('loads empty when not found bands', function() {
     $bands = $loader->load();
     expect($bands->find()->value())->toBe(0.0);
     /** @var SplitterBands $bands */
-   expect($bands->dumpRequestedBands())->toBe([]);
+   expect($bands->pullRequestedBands())->toBe([]);
 });
 
 test("don't load without conditions set", function () {
