@@ -2,46 +2,29 @@
 
 namespace Tanzar\Refract\Support\Bands;
 
-use Tanzar\Refract\Support\Bands\Finder\BandsFinder;
+use Tanzar\Refract\Exceptions\RefractException;
 use Tanzar\Refract\Support\Bands\Finder\BandsFinderInterface;
-use Tanzar\Refract\Support\Bands\Tree\BandsBranch;
+use Override;
 
 class Bands implements BandsInterface
 {
-    /** @var BandsFinder[] */
-    private array $recentFinders = [];
+    /** @var array<string, SplitterBandsInterface> */
+   private array $bands = [];
 
-    public function __construct(public BandsBranch $root) { }
+   public function add(string $key, SplitterBandsInterface $splitterBands): void
+   {
+        $this->bands[$key] = $splitterBands;
+   }
 
+   #[Override]
+   public function for(string $key): BandsFinderInterface
+   {
+       if (!isset($this->bands[$key])) {
+        throw new RefractException("Bands for '$key' are not loaded");
+       }
 
-    public function find(): BandsFinderInterface
-    {
-        $finder = new BandsFinder($this->root);
+       return $this->bands[$key]->find();
+   }
 
-        $this->recentFinders[] = $finder;
-
-        return $finder;
-    }
-
-    /**
-     * @return int[]
-     */
-    public function dumpRequestedBands(): array
-    {
-        $bands = [];
-
-        /** @var BandsFinder $finder */
-        foreach($this->recentFinders as $finder) {
-            $finderBands = $finder->bands();
-
-            $bands = array_values(
-                array_unique(
-                    array_merge($bands, $finderBands)
-                )
-            );
-        }
-        
-        $this->recentFinders = [];
-        return $bands;
-    }
+   
 }

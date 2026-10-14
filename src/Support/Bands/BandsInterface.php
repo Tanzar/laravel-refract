@@ -6,5 +6,5 @@ use Tanzar\Refract\Support\Bands\Finder\BandsFinderInterface;
 
 interface BandsInterface
 {
-    public function find(): BandsFinderInterface;
+    public function for(string $splitter): BandsFinderInterface;
 }

@@ -6,11 +6,10 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use stdClass;
 use Tanzar\Refract\Exceptions\RefractException;
 use Tanzar\Refract\Splitter\Splitter;
-use Tanzar\Refract\Support\Bands\Bands;
-use Tanzar\Refract\Support\Bands\BandsInterface;
+use Tanzar\Refract\Support\Bands\SplitterBands;
+use Tanzar\Refract\Support\Bands\SplitterBandsInterface;
 use Tanzar\Refract\Support\Bands\Tree\BandsBranch;
 use Tanzar\Refract\Support\Filters\Filters;
 use Tanzar\Refract\Support\RefractFactory;
@@ -59,7 +58,7 @@ class BandsLoader
         return $this;
     }
 
-    public function load(): BandsInterface
+    public function load(): SplitterBandsInterface
     {
         if ($this->conditions->isEmpty()) {
             throw new RefractException('Loader must have at least 1 condition set');
@@ -72,7 +71,7 @@ class BandsLoader
 
         $tree = $this->buildDataTree($keys);
 
-        return new Bands($tree);
+        return new SplitterBands($tree);
     }
 
     /**
@@ -92,7 +91,7 @@ class BandsLoader
                         $first = $bandRows->first();
 
                         $path = [];
-                        $bandRows->each(function (stdClass $row) use (&$path) {
+                        $bandRows->each(function (\stdClass $row) use (&$path) {
                             if (!is_null($row->key_name)) {
                                 $path[$row->key_name] = $row->raw_value;
                             }

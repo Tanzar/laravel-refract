@@ -1,8 +1,8 @@
 <?php
 
 use Tanzar\Refract\Exceptions\RefractException;
-use Tanzar\Refract\Support\Bands\Bands;
 use Tanzar\Refract\Support\Bands\Loader\BandsLoader;
+use Tanzar\Refract\Support\Bands\SplitterBands;
 use Tanzar\Refract\Support\Filters\Filters;
 use Workbench\App\Splitters\TotalFoodsSplitter;
 use Workbench\Database\Seeders\DatabaseSeeder;
@@ -19,7 +19,7 @@ test('loads and finds correct bands', function () {
 
     $bands = $loader->load();
     expect($bands->find()->value())->toBe(2.0);
-    /** @var Bands $bands */
+    /** @var SplitterBands $bands */
    expect($bands->dumpRequestedBands())->toBe([4, 5]);
 
     $second = new BandsLoader(TotalFoodsSplitter::class, $filters);
@@ -27,7 +27,7 @@ test('loads and finds correct bands', function () {
     $secondBands = $second->load();
 
     expect($secondBands->find()->value())->toBe(4.0);
-    /** @var Bands $secondBands */
+    /** @var SplitterBands $secondBands */
     expect($secondBands->dumpRequestedBands())->toBe([3, 4, 5, 6]);
 });
 
@@ -42,7 +42,7 @@ test('loads empty when not found bands', function() {
 
     $bands = $loader->load();
     expect($bands->find()->value())->toBe(0.0);
-    /** @var Bands $bands */
+    /** @var SplitterBands $bands */
    expect($bands->dumpRequestedBands())->toBe([]);
 });
 
