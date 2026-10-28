@@ -13,12 +13,15 @@ use Tanzar\Refract\Support\Lens\Nodes\Value\LensStringNode;
 
 final class LensObjectNode extends LensCollectionNode
 {
+    /** @var array<string, boolean> */
+    private array $keys = [];
+
     public function int(string $key, int $value): LensIntegerNode
     {
         $node = new LensIntegerNode($this->childPath($key), $this->bands(), $this->root(), $value);
 
         $this->addChild($key, $node);
-
+        $this->keys[$key] = true;
         return $node;
     }
 
@@ -27,7 +30,7 @@ final class LensObjectNode extends LensCollectionNode
         $node = new LensFloatNode($this->childPath($key), $this->bands(), $this->root(), $value);
 
         $this->addChild($key, $node);
-
+        $this->keys[$key] = true;
         return $node;
     }
 
@@ -36,7 +39,7 @@ final class LensObjectNode extends LensCollectionNode
         $node = new LensStringNode($this->childPath($key), $this->bands(), $this->root(), $value);
 
         $this->addChild($key, $node);
-
+        $this->keys[$key] = true;
         return $node;
     }
 
@@ -45,7 +48,7 @@ final class LensObjectNode extends LensCollectionNode
         $node = new LensComputedNode($this->childPath($key), $this->bands(), $this->root(), $handle);
 
         $this->addChild($key, $node);
-
+        $this->keys[$key] = true;
         return $node;
     }
 
@@ -54,7 +57,7 @@ final class LensObjectNode extends LensCollectionNode
         $node = new LensObjectNode($this->childPath($key), $this->bands(), $this->root());
 
         $this->addChild($key, $node);
-
+        $this->keys[$key] = true;
         return $node;
     }
 
@@ -63,7 +66,7 @@ final class LensObjectNode extends LensCollectionNode
         $node = new LensArrayNode($this->childPath($key), $this->bands(), $this->root());
 
         $this->addChild($key, $node);
-
+        $this->keys[$key] = true;
         return $node;
     }
 
@@ -71,9 +74,12 @@ final class LensObjectNode extends LensCollectionNode
     public function toArray(): array
     {
         $array = [];
-        $this->each(function (string|int $key, LensNode $node) use (&$array) {
-            $array[(string) $key] = $node->toArray();
-        });
+        foreach ($this->keys as $key => $state) {
+            $node = $this->get($key);
+            if ($node) {
+                $array[$key] = $node->toArray();
+            }
+        }
         return $array;
     }
 

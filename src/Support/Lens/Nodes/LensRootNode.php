@@ -11,10 +11,12 @@ use Tanzar\Refract\Support\Lens\Nodes\Collection\LensObjectNode;
 final class LensRootNode implements LensRootNodeInterface
 {
     private LensObjectNode $root;
+    private LensMetaData $meta;
 
     public function __construct(private Bands $bands)
     {
         $this->root = new LensObjectNode('', $bands, $this);
+        $this->meta = new LensMetaData();
     }
 
     #[Override]
@@ -29,6 +31,20 @@ final class LensRootNode implements LensRootNodeInterface
 
     #[Override]
     public function get(string $path): LensNode
+    {
+        $node = $this->find($path);
+        if ($node) {
+            return $node;
+        }
+        throw new RefractException("No node was found for path: '$path'");
+    }
+
+    public function have(string $path): bool
+    {
+        return $this->find($path) !== null;
+    }
+
+    private function find(string $path): ?LensNode
     {
         $currentNode = $this->root;
         $keys = Str::of($path)->explode('.');
@@ -49,13 +65,28 @@ final class LensRootNode implements LensRootNodeInterface
         if ($found) {
             return $found;
         }
-        throw new RefractException("No node was found for path: '$path'");
+        return null;
+    }
+
+    #[Override]
+    public function meta(): LensMetaData
+    {
+        return $this->meta;
     }
 
     #[Override]
     public function root(): LensObjectNode
     {
         return $this->root;
+    }
+
+    public function eachValueNode(callable $handle): void
+    {
+        $this->root->each(function (string $key, LensNode $node) use ($handle) {
+            if ($node instanceof LensValueNode) {
+                $handle($node);
+            }
+        });
     }
 
 }

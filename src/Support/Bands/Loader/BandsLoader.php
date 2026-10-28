@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\DB;
 use Tanzar\Refract\Exceptions\RefractException;
 use Tanzar\Refract\Splitter\Splitter;
 use Tanzar\Refract\Support\Bands\SplitterBands;
-use Tanzar\Refract\Support\Bands\SplitterBandsInterface;
 use Tanzar\Refract\Support\Bands\Tree\BandsBranch;
 use Tanzar\Refract\Support\Filters\Filters;
 use Tanzar\Refract\Support\RefractFactory;

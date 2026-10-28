@@ -85,9 +85,12 @@ class LensArrayNode extends LensCollectionNode
     public function toArray(): array
     {
         $array = [];
-        $this->each(function (string|int $key, LensNode $node) use (&$array) {
-            $array[] = $node->toArray();
-        });
+        for ($i = 0; $i < $this->count; $i++) {
+            $node = $this->get($i);
+            if ($node) {
+                $array[] = $node->toArray();
+            }
+        }
         return $array;
     }
 

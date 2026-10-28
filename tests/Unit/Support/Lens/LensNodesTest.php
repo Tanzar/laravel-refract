@@ -6,8 +6,10 @@ use Tanzar\Refract\Support\Bands\SplitterBands;
 use Tanzar\Refract\Support\Bands\Tree\BandsBranch;
 use Tanzar\Refract\Support\Lens\Nodes\Collection\LensArrayNode;
 use Tanzar\Refract\Support\Lens\Nodes\Collection\LensObjectNode;
+use Tanzar\Refract\Support\Lens\Nodes\LensMetaData;
 use Tanzar\Refract\Support\Lens\Nodes\LensRootNode;
 use Tanzar\Refract\Support\Lens\Nodes\LensRootNodeInterface;
+use Tanzar\Refract\Support\Lens\Nodes\LensValueNode;
 use Tanzar\Refract\Support\Lens\Nodes\Value\LensComputedNode;
 use Tanzar\Refract\Support\Lens\Nodes\Value\LensFloatNode;
 use Tanzar\Refract\Support\Lens\Nodes\Value\LensIntegerNode;
@@ -198,6 +200,20 @@ test('collection node get not found', function () {
     expect($node->get('user'))->toBeNull();
 });
 
+test('meta data returns correct array', function () {
+    $meta = new LensMetaData();
+
+    $meta->set('int', 12)
+        ->set('float', 13.4)
+        ->set('text', 'Oh HI!');
+
+    expect($meta->toArray())->toBe([
+        'int' => 12,
+        'float' => 13.4,
+        'text' => 'Oh HI!',
+    ]);
+});
+
 test('root node get value for collection node', function () {
 
     $bandsRoot = new BandsBranch(0, [ 'type' , 'brand' ]);
@@ -209,6 +225,68 @@ test('root node get value for collection node', function () {
     $root->root()->object('item')->object('ball')->int('age', 78);
 
     expect($root->value('item.ball'))->toBe('');
+});
+
+test('root node gets correct meta', function () {
+    
+    $bandsRoot = new BandsBranch(0, [ 'type' , 'brand' ]);
+
+    $bands = new Bands();
+    $bands->add('main', new TotalFoodsSplitter(), new SplitterBands($bandsRoot));
+    $root = new LensRootNode($bands);
+    $root->meta()->set('int', 12)
+        ->set('float', 13.4)
+        ->set('text', 'Oh HI!');
+
+    expect($root->meta()->toArray())->toBe([
+        'int' => 12,
+        'float' => 13.4,
+        'text' => 'Oh HI!',
+    ]);
+});
+
+test('root node have method checks paths correctly', function () {
+    
+    $bandsRoot = new BandsBranch(0, [ 'type' , 'brand' ]);
+
+    $bands = new Bands();
+    $bands->add('main', new TotalFoodsSplitter(), new SplitterBands($bandsRoot));
+    $root = new LensRootNode($bands);
+    $root = new LensRootNode($bands);
+    $obj = $root->root()->object('obj');
+    $obj->int('val', 12);
+    $obj->string('name', 'test');
+    $root->root()->float('map', 12.4);
+
+    expect($root->have('obj'))->toBeTrue();
+    expect($root->have('obj.val'))->toBeTrue();
+    expect($root->have('obj.name'))->toBeTrue();
+    expect($root->have('map'))->toBeTrue();
+    expect($root->have('obj.nody'))->toBeFalse();
+});
+
+test('root node eachValueNode() method runs over correct nodes', function () {
+    
+    $bandsRoot = new BandsBranch(0, [ 'type' ]);
+
+    $bands = new Bands();
+    $bands->add('main', new TotalFoodsSplitter(), new SplitterBands($bandsRoot));
+    $root = new LensRootNode($bands);
+    $obj = $root->root()->object('obj');
+    $obj->int('val', 12);
+    $obj->string('name', 'test');
+    $root->root()->float('map', 12.4);
+   
+    $paths = [];
+    $root->eachValueNode(function (LensValueNode $node) use (&$paths) {
+        $paths[] = $node->path();
+    });
+
+    expect($paths)->toBe([
+        'obj.val',
+        'obj.name',
+        'map',
+    ]);
 });
 
 test('root node get throws on missing key', function () {

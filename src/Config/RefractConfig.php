@@ -3,6 +3,7 @@
 namespace Tanzar\Refract\Config;
 
 use Tanzar\Refract\Splitter\Splitter;
+use Tanzar\Refract\Support\Lens\Lens;
 
 final class RefractConfig
 {
@@ -22,11 +23,15 @@ final class RefractConfig
     }
 
     /**
-     * @return array<string, class-string<Splitter>>
+     * @return array<string, class-string<Splitter|Lens>>
      */
-    public static function aliases(): array
+    public static function aliases(string $type): array
     {
-        return config('refract.splitters.aliases', []);
+        return match($type) {
+            'splitter' => config('refract.splitters.aliases', []),
+            'lens' => config('refract.lens.aliases', []),
+            default => []
+        };
     }
 
     public static function splittersDefaultQueue(): string
@@ -37,5 +42,15 @@ final class RefractConfig
     public static function bufferDelay(): int
     {
         return config('refract.buffer_delay', 10);
+    }
+
+    public static function lensGetAttempts(): int
+    {
+        return (int) config('refract.lens.wait.attempts', 4);
+    }
+
+    public static function lensGetRetryDelay(): int
+    {
+        return (int) config('refract.lens.wait.delay', 1);
     }
 }

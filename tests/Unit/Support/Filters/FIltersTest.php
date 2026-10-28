@@ -73,6 +73,27 @@ test('hashing', function() {
     
 });
 
+test('toArray generates oredred array', function () {
+    
+    $filters = new Filters();
+
+    $filters->float('price', 15.54)
+        ->date('today', Carbon::parse('2026-10-10 10:23:15'))
+        ->string('message', 'Hello there')
+        ->int('id', 13)
+        ->bool('isDead', true);
+
+    $array = $filters->toArray();
+
+    expect($array)->toBe([
+        'id' => [ 'value' => 13, 'type' => 'int' ],
+        'isDead' => [ 'value' => true, 'type' => 'bool' ],
+        'message' => [ 'value' => 'Hello there', 'type' => 'string' ],
+        'price' => [ 'value' => 15.54, 'type' => 'float' ],
+        'today' => [ 'value' => '2026-10-10', 'type' => 'date' ],
+    ]);
+});
+
 test('filters refference', function() {
     $ref = Filters::ref('node');
 

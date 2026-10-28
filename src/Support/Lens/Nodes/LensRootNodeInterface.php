@@ -10,5 +10,7 @@ interface LensRootNodeInterface
 
     public function value(string $path): int|float|string|bool;
 
+    public function meta(): LensMetaData;
+
     public function root(): LensObjectNode;
 }

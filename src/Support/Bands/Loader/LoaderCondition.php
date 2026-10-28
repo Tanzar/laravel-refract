@@ -19,7 +19,7 @@ abstract class LoaderCondition
     final protected function getValue(mixed $value): mixed
     {
         if ($value instanceof FiltersRef) {
-            return $this->filters->get($this->key);
+            return $this->filters->get($value->key());
         }
         return $value;
     }

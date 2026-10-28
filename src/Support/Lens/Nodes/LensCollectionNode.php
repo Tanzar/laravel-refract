@@ -45,6 +45,9 @@ abstract class LensCollectionNode extends LensNode
     {
         foreach ($this->nodes as $key => $node) {
             $handle($key, $node);
+            if ($node instanceof LensCollectionNode) {
+                $node->each($handle);
+            }
         }
     }
 

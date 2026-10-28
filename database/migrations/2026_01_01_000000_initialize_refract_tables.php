@@ -70,24 +70,29 @@ return new class extends Migration
             $table->text('lens_type');
             $table->string('filters_hash');
             $table->json('filters');
+            $table->string('state');
+            $table->json('meta_data')->nullable();
             $table->datetime('last_requested_at');
 
             $table->index('filters_hash');
+            $table->unique(['lens_type', 'filters_hash']);
         });
 
         Schema::create('refract_lens_paths', function(Blueprint $table) {
             $table->foreignId('cached_lens_id')
-                ->constrained('refract_cached_lens')
+                ->references('id')
+                ->on('refract_cached_lens')
                 ->cascadeOnDelete();
             $table->string('path');
-            $table->string('path_value');
+            $table->json('path_value');
 
             $table->primary([ 'cached_lens_id', 'path' ]);
         });
 
         Schema::create('refract_lens_bands', function(Blueprint $table) {
             $table->foreignId('cached_lens_id')
-                ->constrained('refract_cached_lens')
+                ->references('id')
+                ->on('refract_cached_lens')
                 ->cascadeOnDelete();
             $table->string('path');
             $table->foreignId('splitter_id')
