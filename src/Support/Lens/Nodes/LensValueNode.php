@@ -2,8 +2,6 @@
 
 namespace Tanzar\Refract\Support\Lens\Nodes;
 
-use Override;
-
 abstract class LensValueNode extends LensNode
 {
     /** @var array<string, int|float|string|bool> */

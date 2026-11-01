@@ -14,4 +14,6 @@ interface BandsLoaderInterface
     public function whereIn(string $key, array $values): BandsLoaderInterface;
 
     public function whereBetween(string $key, mixed $from, mixed $to): BandsLoaderInterface;
+
+    public function groupBy(string $key): BandsLoaderInterface;
 }

@@ -29,6 +29,17 @@ test('loads and finds correct bands', function () {
     expect($secondBands->find()->value())->toBe(4.0);
     /** @var SplitterBands $secondBands */
     expect($secondBands->pullRequestedBands())->toBe([3, 4, 5, 6]);
+
+    $third = new BandsLoader(TotalFoodsSplitter::class, $filters);
+    $third->where('category', 'fast_food')
+        ->groupBy('price');
+    $thirdBands = $third->load();
+
+    expect($thirdBands->find()->value())->toBe(3.0);
+    /** @var SplitterBands $thirdBands */
+    expect($thirdBands->pullRequestedBands())->toBe([1, 2]);
+    expect($thirdBands->find()->where('price', 13)->value())->toBe(1.0);
+    expect($thirdBands->find()->where('price', 15)->value())->toBe(2.0);
 });
 
 test('loads empty when not found bands', function() {

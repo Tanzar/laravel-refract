@@ -20,12 +20,16 @@ class BandsLoader implements BandsLoaderInterface
     /** @var Collection<string, LoaderCondition> */
     private Collection $conditions;
 
+    /** @var Collection<int, string> */
+    private Collection $groupings;
+
     public function __construct(
         string $splitter,
         private Filters $filters
     ) {
         $this->splitter = RefractFactory::splitter($splitter);
         $this->conditions = collect();
+        $this->groupings = collect();
     }
 
     public function splitter(): Splitter
@@ -62,6 +66,14 @@ class BandsLoader implements BandsLoaderInterface
         return $this;
     }
 
+    public function groupBy(string $key): BandsLoaderInterface
+    {
+        $this->checkKey($key);
+
+        $this->groupings->add($key);
+        return $this;
+    }
+
     public function load(): SplitterBands
     {
         if ($this->conditions->isEmpty()) {
@@ -69,6 +81,8 @@ class BandsLoader implements BandsLoaderInterface
         }
 
         $keys = $this->conditions->keys()
+            ->merge($this->groupings)
+            ->unique()
             ->sort()
             ->values()
             ->toArray();
