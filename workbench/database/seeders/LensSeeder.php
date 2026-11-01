@@ -31,8 +31,8 @@ class LensSeeder extends Seeder
         ]);
 
         DB::table('refract_lens_paths')->insert([
-            [ 'cached_lens_id' => 1, 'path' => 'cheap', 'path_value' => json_encode([ 'value' => 1, 'options' => [] ]) ],
-            [ 'cached_lens_id' => 1, 'path' => 'expensive', 'path_value' => json_encode([ 'value' => 2, 'options' => [] ]) ]
+            [ 'cached_lens_id' => 1, 'path' => 'cheap', 'path_value' => json_encode([ 'value' => 1, 'path' => 'cheap', 'options' => [] ]) ],
+            [ 'cached_lens_id' => 1, 'path' => 'expensive', 'path_value' => json_encode([ 'value' => 2, 'path' => 'expensive', 'options' => [] ]) ]
         ]);
 
         DB::table('refract_lens_bands')->insert([

@@ -30,6 +30,7 @@ test('simple value nodes return correct values', function () {
     expect($int->path())->toBe('int');
     expect($int->toArray())->toBe([
         'value' => 12,
+        'path' => 'int',
         'options' => [ 'int' => 1, 'float' => 12.2, 'str' => 'nope', 'bool' => true ]
     ]);
 
@@ -39,6 +40,7 @@ test('simple value nodes return correct values', function () {
     expect($float->path())->toBe('float');
     expect($float->toArray())->toBe([
         'value' => 15.13,
+        'path' => 'float',
         'options' => []
     ]);
     
@@ -48,6 +50,7 @@ test('simple value nodes return correct values', function () {
     expect($string->path())->toBe('string');
     expect($string->toArray())->toBe([
         'value' => 'Hello there',
+        'path' => 'string',
         'options' => []
     ]);
 });
@@ -133,15 +136,15 @@ test('object node works properly', function () {
     $node->array('array')->int(134);
 
     expect($node->toArray())->toBe([
-        'int' => [ 'value' => 11, 'options' => [] ],
-        'float' => [ 'value' => 12.5, 'options' => [] ],
-        'string' => [ 'value' => 'Hello there', 'options' => [] ],
-        'computed' => [ 'value' => 'General Calculator!', 'options' => [] ],
+        'int' => [ 'value' => 11, 'path' => 'int', 'options' => [] ],
+        'float' => [ 'value' => 12.5, 'path' => 'float', 'options' => [] ],
+        'string' => [ 'value' => 'Hello there', 'path' => 'string', 'options' => [] ],
+        'computed' => [ 'value' => 'General Calculator!', 'path' => 'computed', 'options' => [] ],
         'son' => [
-            'grade' => [ 'value' => 4, 'options' => [] ]
+            'grade' => [ 'value' => 4, 'path' => 'son.grade', 'options' => [] ]
         ],
         'array' => [
-            [ 'value' => 134, 'options' => [] ]
+            [ 'value' => 134, 'path' => 'array.0', 'options' => [] ]
         ]
     ]);
 });
@@ -166,12 +169,12 @@ test('array node works properly', function () {
     $node->array()->int(134);
 
     expect($node->toArray())->toBe([
-        [ 'value' => 11, 'options' => [] ],
-        [ 'value' => 12.5, 'options' => [] ],
-        [ 'value' => 'Hello there', 'options' => [] ],
-        [ 'value' => 'General Calculator!', 'options' => [] ],
-        [ 'grade' => [ 'value' => 4, 'options' => [] ] ],
-        [ [ 'value' => 134, 'options' => [] ] ]
+        [ 'value' => 11, 'path' => '0', 'options' => [] ],
+        [ 'value' => 12.5, 'path' => '1', 'options' => [] ],
+        [ 'value' => 'Hello there', 'path' => '2', 'options' => [] ],
+        [ 'value' => 'General Calculator!', 'path' => '3', 'options' => [] ],
+        [ 'grade' => [ 'value' => 4, 'path' => '4.grade', 'options' => [] ] ],
+        [ [ 'value' => 134, 'path' => '5.0', 'options' => [] ] ]
     ]);
 });
 

@@ -26,16 +26,16 @@ final class LensComputedNode extends LensValueNode
     }
 
     #[Override]
-    public function value(): int|float|string|bool
+    public function value(): int|float|string|bool|null
     {
         if ($this->locked) {
             throw new RefractException("Node '" . $this->path() . "' is locked, by another node");
         }
         $this->locked = true;
         $handle = $this->handle;
-        $value = $handle($this->bands(), $this->root());
+        $value = $handle($this->bands(), $this->root()) ?? null;
         if ($this->isNotCorrectType($value)) {
-            throw new RefractException("Computed node '" . $this->path() . "' handle return value must be type int|float|string|bool");
+            throw new RefractException("Computed node '" . $this->path() . "' handle return value must be type int|float|string|bool|null");
         }
         $this->bandsIndexes = $this->bands()->pullRequestedBands();
         $this->locked = false;
@@ -48,7 +48,8 @@ final class LensComputedNode extends LensValueNode
             is_string($value) ||
             is_int($value) ||
             is_float($value) ||
-            is_bool($value)
+            is_bool($value) ||
+            is_null($value)
         );
     }
 

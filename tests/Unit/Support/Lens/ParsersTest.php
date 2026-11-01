@@ -50,10 +50,10 @@ test('LensRoot parser returns correct format', function () {
         'meta' => [ 'hello' => 'meta' ],
         'nodes' => [
             'obj' => [
-                'val' => [ 'value' => 12, 'options' => [ 'opt' => 1 ] ],
-                'name' => [ 'value' => 'test', 'options' => [] ]
+                'val' => [ 'value' => 12, 'path' => 'obj.val', 'options' => [ 'opt' => 1 ] ],
+                'name' => [ 'value' => 'test', 'path' => 'obj.name', 'options' => [] ]
             ],
-            'map' => [ 'value' => 12.4, 'options' => [] ],
+            'map' => [ 'value' => 12.4, 'path' => 'map', 'options' => [] ],
         ]
     ]);
 });
@@ -66,8 +66,8 @@ test('CahcedLensPraser returns correct format', function () {
         'lens' => [ 'cacheId' => 1, ],
         'meta' => [],
         'nodes' => [
-            'cheap' => [ 'value' => 1, 'options' => [] ],
-            'expensive' => [ 'value' => 2, 'options' => [] ],
+            'cheap' => [ 'value' => 1, 'path' => 'cheap', 'options' => [] ],
+            'expensive' => [ 'value' => 2, 'path' => 'expensive', 'options' => [] ],
         ]
     ]);
 });

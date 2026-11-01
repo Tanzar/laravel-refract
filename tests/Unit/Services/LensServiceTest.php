@@ -28,8 +28,8 @@ test('get creates new entry', function() {
         'lens' => [ 'cacheId' => 1, ],
         'meta' => [],
         'nodes' => [
-            'cheap' => [ 'value' => 1.0, 'options' => [] ],
-            'expensive' => [ 'value' => 2.0, 'options' => [] ],
+            'cheap' => [ 'value' => 1.0, 'path' => 'cheap', 'options' => [] ],
+            'expensive' => [ 'value' => 2.0, 'path' => 'expensive', 'options' => [] ],
         ]
     ]);
 
@@ -45,10 +45,10 @@ test('get creates new entry', function() {
         ]);
 
     $this->assertDatabaseHas('refract_lens_paths',
-        [ 'cached_lens_id' => 1, 'path' => 'cheap', 'path_value' => json_encode([ 'value' => 1, 'options' => [] ]) ]);
+        [ 'cached_lens_id' => 1, 'path' => 'cheap', 'path_value' => json_encode([ 'value' => 1, 'path' => 'cheap', 'options' => [] ]) ]);
     
     $this->assertDatabaseHas('refract_lens_paths',
-        [ 'cached_lens_id' => 1, 'path' => 'expensive', 'path_value' => json_encode([ 'value' => 2, 'options' => [] ]) ]);
+        [ 'cached_lens_id' => 1, 'path' => 'expensive', 'path_value' => json_encode([ 'value' => 2, 'path' => 'expensive', 'options' => [] ]) ]);
 
     $this->assertDatabaseHas('refract_lens_bands',
         [ 'cached_lens_id' => 1, 'path' => 'cheap', 'splitter_id' => 1, 'band_index' => 1 ]);
@@ -68,8 +68,8 @@ test('get retrieves from cache', function () {
         'lens' => [ 'cacheId' => 1, ],
         'meta' => [],
         'nodes' => [
-            'cheap' => [ 'value' => 1, 'options' => [] ],
-            'expensive' => [ 'value' => 2, 'options' => [] ],
+            'cheap' => [ 'value' => 1, 'path' => 'cheap', 'options' => [] ],
+            'expensive' => [ 'value' => 2, 'path' => 'expensive', 'options' => [] ],
         ]
     ]);
 
@@ -128,8 +128,8 @@ test('get retrieves from cache, waits, then makes for self', function () {
         'lens' => [ 'cacheId' => 1, ],
         'meta' => [],
         'nodes' => [
-            'cheap' => [ 'value' => 1.0, 'options' => [] ],
-            'expensive' => [ 'value' => 2.0, 'options' => [] ],
+            'cheap' => [ 'value' => 1.0, 'path' => 'cheap', 'options' => [] ],
+            'expensive' => [ 'value' => 2.0, 'path' => 'expensive', 'options' => [] ],
         ]
     ]);
 
@@ -177,8 +177,8 @@ test('updates cache tables correctly', function () {
                 'lens' => [ 'cacheId' => 1, ],
                 'meta' => [],
                 'nodes' => [
-                    'cheap' => [ 'value' => 1.0, 'options' => [] ],
-                    'expensive' => [ 'value' => 2.0, 'options' => [] ],
+                    'cheap' => [ 'value' => 1.0, 'path' => 'cheap', 'options' => [] ],
+                    'expensive' => [ 'value' => 2.0, 'path' => 'expensive', 'options' => [] ],
                 ]
             ];
     });
@@ -196,10 +196,10 @@ test('updates cache tables correctly', function () {
 
     $this->assertDatabaseCount('refract_lens_paths', 2);
     $this->assertDatabaseHas('refract_lens_paths',
-        [ 'cached_lens_id' => 1, 'path' => 'cheap', 'path_value' => json_encode([ 'value' => 1, 'options' => [] ]) ]);
+        [ 'cached_lens_id' => 1, 'path' => 'cheap', 'path_value' => json_encode([ 'value' => 1, 'path' => 'cheap', 'options' => [] ]) ]);
     
     $this->assertDatabaseHas('refract_lens_paths',
-        [ 'cached_lens_id' => 1, 'path' => 'expensive', 'path_value' => json_encode([ 'value' => 2, 'options' => [] ]) ]);
+        [ 'cached_lens_id' => 1, 'path' => 'expensive', 'path_value' => json_encode([ 'value' => 2, 'path' => 'expensive', 'options' => [] ]) ]);
 
     
     $this->assertDatabaseCount('refract_lens_bands', 2);
